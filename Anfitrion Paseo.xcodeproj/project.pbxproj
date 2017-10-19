@@ -1,0 +1,309 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FAD6E4611F98D9B500824842 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD6E4601F98D9B500824842 /* AppDelegate.swift */; };
+		FAD6E4631F98D9B500824842 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD6E4621F98D9B500824842 /* ViewController.swift */; };
+		FAD6E4661F98D9B500824842 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAD6E4641F98D9B500824842 /* Main.storyboard */; };
+		FAD6E4681F98D9B500824842 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD6E4671F98D9B500824842 /* Assets.xcassets */; };
+		FAD6E46B1F98D9B500824842 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAD6E4691F98D9B500824842 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FAD6E45D1F98D9B500824842 /* Anfitrion Paseo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Anfitrion Paseo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAD6E4601F98D9B500824842 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FAD6E4621F98D9B500824842 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FAD6E4651F98D9B500824842 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FAD6E4671F98D9B500824842 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FAD6E46A1F98D9B500824842 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FAD6E46C1F98D9B500824842 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FAD6E45A1F98D9B400824842 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FAD6E4541F98D9B400824842 = {
+			isa = PBXGroup;
+			children = (
+				FAD6E45F1F98D9B500824842 /* Anfitrion Paseo */,
+				FAD6E45E1F98D9B500824842 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FAD6E45E1F98D9B500824842 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FAD6E45D1F98D9B500824842 /* Anfitrion Paseo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FAD6E45F1F98D9B500824842 /* Anfitrion Paseo */ = {
+			isa = PBXGroup;
+			children = (
+				FAD6E4601F98D9B500824842 /* AppDelegate.swift */,
+				FAD6E4621F98D9B500824842 /* ViewController.swift */,
+				FAD6E4641F98D9B500824842 /* Main.storyboard */,
+				FAD6E4671F98D9B500824842 /* Assets.xcassets */,
+				FAD6E4691F98D9B500824842 /* LaunchScreen.storyboard */,
+				FAD6E46C1F98D9B500824842 /* Info.plist */,
+			);
+			path = "Anfitrion Paseo";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FAD6E45C1F98D9B400824842 /* Anfitrion Paseo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAD6E46F1F98D9B500824842 /* Build configuration list for PBXNativeTarget "Anfitrion Paseo" */;
+			buildPhases = (
+				FAD6E4591F98D9B400824842 /* Sources */,
+				FAD6E45A1F98D9B400824842 /* Frameworks */,
+				FAD6E45B1F98D9B400824842 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Anfitrion Paseo";
+			productName = "Anfitrion Paseo";
+			productReference = FAD6E45D1F98D9B500824842 /* Anfitrion Paseo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FAD6E4551F98D9B400824842 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Grupo Paseo";
+				TargetAttributes = {
+					FAD6E45C1F98D9B400824842 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 3FWNGW7RR4;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = FAD6E4581F98D9B400824842 /* Build configuration list for PBXProject "Anfitrion Paseo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FAD6E4541F98D9B400824842;
+			productRefGroup = FAD6E45E1F98D9B500824842 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FAD6E45C1F98D9B400824842 /* Anfitrion Paseo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FAD6E45B1F98D9B400824842 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAD6E46B1F98D9B500824842 /* LaunchScreen.storyboard in Resources */,
+				FAD6E4681F98D9B500824842 /* Assets.xcassets in Resources */,
+				FAD6E4661F98D9B500824842 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FAD6E4591F98D9B400824842 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAD6E4631F98D9B500824842 /* ViewController.swift in Sources */,
+				FAD6E4611F98D9B500824842 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FAD6E4641F98D9B500824842 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FAD6E4651F98D9B500824842 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FAD6E4691F98D9B500824842 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FAD6E46A1F98D9B500824842 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FAD6E46D1F98D9B500824842 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FAD6E46E1F98D9B500824842 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FAD6E4701F98D9B500824842 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 3FWNGW7RR4;
+				INFOPLIST_FILE = "Anfitrion Paseo/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.paseo78.Anfitrion-Paseo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		FAD6E4711F98D9B500824842 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 3FWNGW7RR4;
+				INFOPLIST_FILE = "Anfitrion Paseo/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.paseo78.Anfitrion-Paseo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FAD6E4581F98D9B400824842 /* Build configuration list for PBXProject "Anfitrion Paseo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAD6E46D1F98D9B500824842 /* Debug */,
+				FAD6E46E1F98D9B500824842 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAD6E46F1F98D9B500824842 /* Build configuration list for PBXNativeTarget "Anfitrion Paseo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAD6E4701F98D9B500824842 /* Debug */,
+				FAD6E4711F98D9B500824842 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FAD6E4551F98D9B400824842 /* Project object */;
+}
