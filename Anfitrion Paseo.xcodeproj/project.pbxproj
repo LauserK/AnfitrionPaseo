@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		68B8664F2A78F34CCB4C7CA3 /* Pods_Anfitrion_Paseo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826FD18A65831C13049F08EE /* Pods_Anfitrion_Paseo.framework */; };
 		FAD6E4611F98D9B500824842 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD6E4601F98D9B500824842 /* AppDelegate.swift */; };
 		FAD6E4631F98D9B500824842 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD6E4621F98D9B500824842 /* ViewController.swift */; };
 		FAD6E4661F98D9B500824842 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAD6E4641F98D9B500824842 /* Main.storyboard */; };
@@ -15,6 +16,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F7F80DFF389BB994893C291 /* Pods-Anfitrion Paseo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Anfitrion Paseo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Anfitrion Paseo/Pods-Anfitrion Paseo.release.xcconfig"; sourceTree = "<group>"; };
+		7015108C23DA3EDFE7DC1DC0 /* Pods-Anfitrion Paseo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Anfitrion Paseo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Anfitrion Paseo/Pods-Anfitrion Paseo.debug.xcconfig"; sourceTree = "<group>"; };
+		826FD18A65831C13049F08EE /* Pods_Anfitrion_Paseo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Anfitrion_Paseo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD6E45D1F98D9B500824842 /* Anfitrion Paseo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Anfitrion Paseo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD6E4601F98D9B500824842 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAD6E4621F98D9B500824842 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -29,17 +33,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68B8664F2A78F34CCB4C7CA3 /* Pods_Anfitrion_Paseo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4532B7457C61D76E5A38BA52 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7015108C23DA3EDFE7DC1DC0 /* Pods-Anfitrion Paseo.debug.xcconfig */,
+				0F7F80DFF389BB994893C291 /* Pods-Anfitrion Paseo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		536086CFC796E8DA28F11965 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				826FD18A65831C13049F08EE /* Pods_Anfitrion_Paseo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		FAD6E4541F98D9B400824842 = {
 			isa = PBXGroup;
 			children = (
 				FAD6E45F1F98D9B500824842 /* Anfitrion Paseo */,
 				FAD6E45E1F98D9B500824842 /* Products */,
+				4532B7457C61D76E5A38BA52 /* Pods */,
+				536086CFC796E8DA28F11965 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,9 +95,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FAD6E46F1F98D9B500824842 /* Build configuration list for PBXNativeTarget "Anfitrion Paseo" */;
 			buildPhases = (
+				656D4C5D93DD003854A97733 /* [CP] Check Pods Manifest.lock */,
 				FAD6E4591F98D9B400824842 /* Sources */,
 				FAD6E45A1F98D9B400824842 /* Frameworks */,
 				FAD6E45B1F98D9B400824842 /* Resources */,
+				0703A8D9437E7016D1D4586A /* [CP] Embed Pods Frameworks */,
+				EC5CCA2BA85CEC22CB1C3C87 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -131,6 +158,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0703A8D9437E7016D1D4586A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Anfitrion Paseo/Pods-Anfitrion Paseo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Anfitrion Paseo/Pods-Anfitrion Paseo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		656D4C5D93DD003854A97733 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Anfitrion Paseo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EC5CCA2BA85CEC22CB1C3C87 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Anfitrion Paseo/Pods-Anfitrion Paseo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FAD6E4591F98D9B400824842 /* Sources */ = {
@@ -259,27 +340,33 @@
 		};
 		FAD6E4701F98D9B500824842 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7015108C23DA3EDFE7DC1DC0 /* Pods-Anfitrion Paseo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 3FWNGW7RR4;
 				INFOPLIST_FILE = "Anfitrion Paseo/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.paseo78.Anfitrion-Paseo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.paseo78.anfitrion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		FAD6E4711F98D9B500824842 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0F7F80DFF389BB994893C291 /* Pods-Anfitrion Paseo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 3FWNGW7RR4;
 				INFOPLIST_FILE = "Anfitrion Paseo/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.paseo78.Anfitrion-Paseo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.paseo78.anfitrion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

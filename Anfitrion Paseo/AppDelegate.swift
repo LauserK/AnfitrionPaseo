@@ -8,6 +8,70 @@
 
 import UIKit
 
+/*
+ Funcion para determinar un maximo de caracteres a un UITextField
+ */
+private var __maxLengths = [UITextField: Int]()
+extension UITextField {
+    @IBInspectable var maxLength: Int {
+        get {
+            guard let l = __maxLengths[self] else {
+                return 150 // (global default-limit. or just, Int.max)
+            }
+            return l
+        }
+        set {
+            __maxLengths[self] = newValue
+            addTarget(self, action: #selector(fix), for: .editingChanged)
+        }
+    }
+    func fix(textField: UITextField) {
+        let t = textField.text
+        textField.text = t?.safelyLimitedTo(length: maxLength)
+    }
+}
+
+/*
+ Funcion para determinar un minimo de caracteres a un UITextField, FUNCION ESPECIAL PARA ESTA APP NO ES GENERICA
+*/
+private var __minLengths = [UITextField: Int]()
+extension UITextField {
+    @IBInspectable var minLength: Int {
+        get {
+            guard let l = __minLengths[self] else {
+                return 0 // (global default-limit. or just, Int.max)
+            }
+            return l
+        }
+        set {
+            __minLengths[self] = newValue
+            addTarget(self, action: #selector(fixx), for: .editingDidEnd)
+            addTarget(self, action: #selector(initing), for: .editingDidBegin)
+        }
+    }
+    func fixx(textField: UITextField) {
+        let contador = textField.text!.characters.count
+        if (contador < 1) {
+            textField.backgroundColor = UIColor.white
+        } else if (contador < minLength) {
+            textField.backgroundColor = UIColor.red
+        }
+    }
+    func initing(textField: UITextField) {
+        textField.backgroundColor = UIColor.white
+    }
+}
+
+// funcion para setear el maximo de un text
+extension String
+{
+    func safelyLimitedTo(length n: Int)->String {
+        let c = self.characters
+        if (c.count <= n) { return self }
+        return String( Array(c).prefix(upTo: n) )
+    }
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -40,7 +104,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 
