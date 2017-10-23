@@ -188,6 +188,9 @@
                                 <state key="normal" title="REGISTRAR">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="sendBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sju-NL-KV8"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Fecha de nacimiento:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPz-HI-oE4">
                                 <rect key="frame" x="16" y="332" width="194" height="21"/>
@@ -214,8 +217,11 @@
                         <outlet property="CedulaPicker" destination="om3-0u-3fL" id="4VS-qE-kJX"/>
                         <outlet property="cedulaTxt" destination="Tge-7T-cca" id="faC-fZ-Y16"/>
                         <outlet property="charcuteriaCheck" destination="qSQ-SO-EFV" id="Yqh-QG-mCM"/>
+                        <outlet property="municipioTxt" destination="QAD-N5-Oyv" id="JiP-NI-RmJ"/>
                         <outlet property="nacimientoPicker" destination="d9N-Ls-32D" id="OLL-N8-AFZ"/>
                         <outlet property="nombreLabel" destination="t5b-Yv-06z" id="hHz-La-JTc"/>
+                        <outlet property="nombreTxt" destination="pGu-OP-FoX" id="7Lw-d8-a1O"/>
+                        <outlet property="numeroTxt" destination="CFw-fp-uGn" id="NKJ-4i-WS0"/>
                         <outlet property="operadoraPicker" destination="mC1-3H-Hav" id="nRM-NA-LOb"/>
                         <outlet property="panaderiaCheck" destination="ySk-PF-uwI" id="vgw-6S-zIK"/>
                         <outlet property="pasteleriaCheck" destination="Wwt-0I-9N4" id="uRn-ep-IFH"/>

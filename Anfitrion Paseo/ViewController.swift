@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
@@ -15,6 +16,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var nacimientoPicker: UIDatePicker!
     @IBOutlet weak var nombreLabel: UILabel!
     @IBOutlet weak var operadoraPicker: UIPickerView!
+    @IBOutlet weak var nombreTxt: UITextField!
+    @IBOutlet weak var municipioTxt: UITextField!
+    @IBOutlet weak var numeroTxt: UITextField!
     
     // pseudocheckboxs
     @IBOutlet weak var panaderiaCheck: UIButton!
@@ -153,5 +157,62 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    @IBAction func sendBtn(_ sender: Any) {
+        /*
+         Parametros del request
+            * Documento de identidad: "(tipoDocumento)(numeroDocumento)"
+            * Nombre y apellido / Razon social: "string"
+            * Municipio: "sring"
+            * Numero celular: "(numeroOperadora)(numeroCelular)"
+            * Fecha de nacimiento / Solo personas naturales: "(year)-(month)-(day)"
+            * Area / Sección a agregar: "01" | 01: Caja, 02: CAFETERIA, 03: CHARCUTERIA, 04: PANADERIA, 05: PIZZERIA
+         
+         
+         */
+        
+        // Cedula de identidad o R.I.F del comprador
+        let tipoDocumento = String(identidadArray[CedulaPicker.selectedRow(inComponent: 0)])
+        let documentoIdentidad = "\(tipoDocumento!)\(cedulaTxt.text!)"
+        
+        // Nombre y Apellido o Razon Socal del comprador
+        let nombre = nombreTxt!
+        
+        // Municipio
+        let municipio = municipioTxt!
+        
+        // Numero celular
+        let operadora = String(operadoraArray[operadoraPicker.selectedRow(inComponent: 0)])
+        let numeroCelular = "\(operadora!)\(numeroTxt.text!)"
+        
+        // Fecha de nacimiento solo si es persona natural
+        if (tipoDocumento == "V" || tipoDocumento == "E"){
+            var formater = DateFormatter()
+            formater.dateFormat = "yyyy-MM-dd"
+            let fechaNacimientoOld = nacimientoPicker.date
+            let fechaNacimiento = formater.string(from: fechaNacimientoOld)
+        } else {
+            let fechaNacimiento = ""
+        }
+        
+        // Seccion a la cual se va a agregar a la cola virtual
+        var seccion = ""
+        if (isPanaderiaCheck == true){
+            seccion = "04"
+        } else if (isCharcuteriaCheck == true){
+            seccion = "03"
+        } else if (isPasteleriaCheck == true) {
+            seccion = "06"
+        }
+        
+        Alamofire.request("http://10.10.0.199:8083").response { response in
+            print("Request: \(response.request)")
+            print("Response: \(response.response)")
+            print("Error: \(response.error)")
+            
+            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                print("Data: \(utf8Text)")
+            }
+        }
+    }
 }
 
