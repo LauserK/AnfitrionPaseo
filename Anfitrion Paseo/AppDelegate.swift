@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Anfitrion Paseo
 //
-//  Created by Macbook on 19/10/17.
+//  Created by Kildare Lauser on 19/10/17.
 //  Copyright © 2017 Grupo Paseo. All rights reserved.
 //
 

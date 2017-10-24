@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Anfitrion Paseo
 //
-//  Created by Macbook on 19/10/17.
+//  Created by Kildare Lauser on 19/10/17.
 //  Copyright © 2017 Grupo Paseo. All rights reserved.
 //
 
@@ -25,12 +25,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var pasteleriaCheck: UIButton!
     @IBOutlet weak var charcuteriaCheck: UIButton!
     
-    // variables for pseudocheckbox
+    // variables para los pseudocheckbox
     var isPanaderiaCheck   = false
     var isCharcuteriaCheck = false
     var isPasteleriaCheck  = false
     
-    // inicialize the array for picker data
+    // Vectores para la data de los UIPickerView
     var identidadArray: [String] = [String]()
     var operadoraArray: [String] = [String]()
     
@@ -38,23 +38,35 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set day, month, year picker
-        nacimientoPicker.datePickerMode = .date
+        // Inactivar los inputs hasta verificar la existencia del cliente en la DB
+        self.nombreTxt.isEnabled = false
+        self.municipioTxt.isEnabled = false
+        self.numeroTxt.isEnabled = false
+        self.operadoraPicker.isUserInteractionEnabled = false
+        self.operadoraPicker.alpha = 0.5
+        self.nacimientoPicker.isUserInteractionEnabled = false
+        self.nacimientoPicker.alpha = 0.5
+        
+        
+        // Seteamos el formato Day-Month-Year al Picker
+        self.nacimientoPicker.datePickerMode = .date
+        
+        // Variables para el minimo y maximo
         let gregorian: NSCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
         let currentDate: NSDate = NSDate()
         let components: NSDateComponents = NSDateComponents()
         
-        // Set maximun 100 years old
+        // Setear maximo una edad maxima de 100 anos apartir de hoy
         components.year = -100
         let minDate: NSDate = gregorian.date(byAdding: components as DateComponents, to: currentDate as Date, options: NSCalendar.Options(rawValue: 0))! as NSDate
         self.nacimientoPicker.minimumDate = minDate as Date
         
-        // Set minimun 7 years old
+        // Setear una fecha minima a 7 anos a partir de hoy
         components.year = -7
         let maxDate: NSDate = gregorian.date(byAdding: components as DateComponents, to: currentDate as Date, options: NSCalendar.Options(rawValue: 0))! as NSDate
         self.nacimientoPicker.maximumDate = maxDate as Date
         
-        // when click anywhere dismiss the keyboard
+        // Cuando se hace TAP en cualquier lugar oculta el keyboard
          let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
@@ -106,12 +118,16 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         return ""
     }
     
+    /*
+     Dependiendo del tipo de cliente se cambia el label
+     y el estado del UIPickerView(Fecha Nacimiento)
+     */
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if (pickerView == CedulaPicker){
             let state = identidadArray[row]
             
             if (state == "J" || state == "G") {
-                nombreLabel.text = "Razón Social"
+                nombreLabel.text = "Razón social"
                 nacimientoPicker.isUserInteractionEnabled = false
                 nacimientoPicker.alpha = 0.5
             } else {
@@ -157,6 +173,18 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    // Verificar si existe el cliente
+    @IBAction func checkClienteBtn(_ sender: Any) {
+        nombreTxt.isEnabled = true
+        municipioTxt.isEnabled = true
+        numeroTxt.isEnabled = true
+        self.operadoraPicker.isUserInteractionEnabled = true
+        self.operadoraPicker.alpha = 1
+        self.nacimientoPicker.isUserInteractionEnabled = true
+        self.nacimientoPicker.alpha = 1
+    }
+    
+    // Enviar la informacion a la base de datos
     @IBAction func sendBtn(_ sender: Any) {
         /*
          Parametros del request
