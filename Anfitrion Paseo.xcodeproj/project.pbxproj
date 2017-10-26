@@ -13,6 +13,7 @@
 		FAD6E4661F98D9B500824842 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAD6E4641F98D9B500824842 /* Main.storyboard */; };
 		FAD6E4681F98D9B500824842 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD6E4671F98D9B500824842 /* Assets.xcassets */; };
 		FAD6E46B1F98D9B500824842 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAD6E4691F98D9B500824842 /* LaunchScreen.storyboard */; };
+		FADA23D71FA21B2200450F11 /* tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA23D61FA21B2200450F11 /* tools.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		FAD6E4671F98D9B500824842 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAD6E46A1F98D9B500824842 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FAD6E46C1F98D9B500824842 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FADA23D61FA21B2200450F11 /* tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tools.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				FAD6E4671F98D9B500824842 /* Assets.xcassets */,
 				FAD6E4691F98D9B500824842 /* LaunchScreen.storyboard */,
 				FAD6E46C1F98D9B500824842 /* Info.plist */,
+				FADA23D61FA21B2200450F11 /* tools.swift */,
 			);
 			path = "Anfitrion Paseo";
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FADA23D71FA21B2200450F11 /* tools.swift in Sources */,
 				FAD6E4631F98D9B500824842 /* ViewController.swift in Sources */,
 				FAD6E4611F98D9B500824842 /* AppDelegate.swift in Sources */,
 			);
@@ -389,6 +393,7 @@
 				FAD6E4711F98D9B500824842 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

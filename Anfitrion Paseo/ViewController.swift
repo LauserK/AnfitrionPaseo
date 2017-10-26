@@ -175,13 +175,36 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     // Verificar si existe el cliente
     @IBAction func checkClienteBtn(_ sender: Any) {
-        nombreTxt.isEnabled = true
-        municipioTxt.isEnabled = true
-        numeroTxt.isEnabled = true
-        self.operadoraPicker.isUserInteractionEnabled = true
-        self.operadoraPicker.alpha = 1
-        self.nacimientoPicker.isUserInteractionEnabled = true
-        self.nacimientoPicker.alpha = 1
+        // Realizamos a consulta a la base de datos
+        ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto, razon_social,ci_rif, dir_fiscal, telefono FROM clientes WHERE ci_rif='V7128215'") { (data) in
+        
+            // Objeto con la informacion de los clientes
+            let cliente = [
+                "auto": ToolsPaseo().obtenerDato(s: data, i: 0),
+                "razon_social": ToolsPaseo().obtenerDato(s: data, i: 1),
+                "ci_rif": ToolsPaseo().obtenerDato(s: data, i: 2),
+                "dir_fiscal": ToolsPaseo().obtenerDato(s: data, i: 3),
+                "telefono": ToolsPaseo().obtenerDato(s: data, i: 4),
+                "fecha_nacimiento": ""
+            ]
+            
+            if (cliente["auto"] == ""){
+                // Si el cliente no existe se habilitan los campos para poder registrarlo
+                self.nombreTxt.isEnabled = true
+                self.municipioTxt.isEnabled = true
+                self.numeroTxt.isEnabled = true
+                self.operadoraPicker.isUserInteractionEnabled = true
+                self.operadoraPicker.alpha = 1
+                self.nacimientoPicker.isUserInteractionEnabled = true
+                self.nacimientoPicker.alpha = 1
+            
+            } else {
+                // si el cliente ya existe se ingresa la informacion a los inputs siguiendo deshabilitados
+                self.nombreTxt.text = cliente["razon_social"]
+                self.municipioTxt.text = cliente["dir_fiscal"]
+                self.numeroTxt.text = cliente["telefono"]
+            }
+        }
     }
     
     // Enviar la informacion a la base de datos
@@ -232,15 +255,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             seccion = "06"
         }
         
-        Alamofire.request("http://10.10.0.199:8083").response { response in
-            print("Request: \(response.request)")
-            print("Response: \(response.response)")
-            print("Error: \(response.error)")
-            
-            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                print("Data: \(utf8Text)")
-            }
-        }
+        // Insertar a la base de datos
     }
 }
 
