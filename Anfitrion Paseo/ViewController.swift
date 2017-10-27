@@ -34,19 +34,22 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var identidadArray: [String] = [String]()
     var operadoraArray: [String] = [String]()
     
+    //Determinar funcion del boton para ingresar a la cola
+    var registrarCliente: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Inactivar los inputs hasta verificar la existencia del cliente en la DB
-        self.nombreTxt.isEnabled = false
+      /*  self.nombreTxt.isEnabled = false
         self.municipioTxt.isEnabled = false
         self.numeroTxt.isEnabled = false
         self.operadoraPicker.isUserInteractionEnabled = false
         self.operadoraPicker.alpha = 0.5
         self.nacimientoPicker.isUserInteractionEnabled = false
         self.nacimientoPicker.alpha = 0.5
-        
+        */
+        self.limpiar()
         
         // Seteamos el formato Day-Month-Year al Picker
         self.nacimientoPicker.datePickerMode = .date
@@ -66,6 +69,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let maxDate: NSDate = gregorian.date(byAdding: components as DateComponents, to: currentDate as Date, options: NSCalendar.Options(rawValue: 0))! as NSDate
         self.nacimientoPicker.maximumDate = maxDate as Date
         
+        // Seteamos una fecha de nacimiento
+        let dateString = "2000-01-01"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date = dateFormatter.date(from: dateString!)
+        self.nacimientoPicker.setDate(date!, animated: false)
+        
         // Cuando se hace TAP en cualquier lugar oculta el keyboard
          let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -76,13 +86,33 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.operadoraPicker.delegate = self
         self.operadoraPicker.dataSource = self
         
-        identidadArray = ["V", "E", "J", "G"]
-        operadoraArray = ["0412", "0414", "0424","0416", "0426"]
+        self.identidadArray = ["V", "E", "J", "G"]
+        self.operadoraArray = ["0412", "0414", "0424","0416", "0426"]
     }
     
-    //Calls this function when the tap is recognized.
+    func limpiar(){
+        self.registrarCliente = false
+        self.cedulaTxt.text = ""
+        self.nombreTxt.text = ""
+        self.municipioTxt.text = ""
+        self.numeroTxt.text = ""
+        self.isPanaderiaCheck = false
+        self.isPasteleriaCheck = false
+        self.isCharcuteriaCheck = false
+        self.pasteleriaCheck.backgroundColor = UIColor.lightGray
+        self.panaderiaCheck.backgroundColor = UIColor.lightGray
+        self.charcuteriaCheck.backgroundColor = UIColor.lightGray
+        self.nombreTxt.isEnabled = false
+        self.municipioTxt.isEnabled = false
+        self.numeroTxt.isEnabled = false
+        self.operadoraPicker.isUserInteractionEnabled = false
+        self.operadoraPicker.alpha = 0.5
+        self.nacimientoPicker.isUserInteractionEnabled = false
+        self.nacimientoPicker.alpha = 0.5
+    }
+    
+    // Cuando se hace tap quita el keyboard
     func dismissKeyboard() {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
     }
     
@@ -91,7 +121,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         return 1
     }
     
-    // The number of rows of data
+    // Seteamos el row a 1
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
         if (pickerView == CedulaPicker){
@@ -103,7 +133,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         return 1
     }
     
-    // set the data to the picker
+    // Seteamos los arreglos(data) a los picker
     func pickerView(_
         pickerView: UIPickerView,
                     titleForRow row: Int,
@@ -138,71 +168,97 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
-    //Checkbox funtions
-    @IBAction func clickPanaderiaCheck(_ sender: Any) {
-        if (isPanaderiaCheck == false) {
-            panaderiaCheck.backgroundColor = UIColor.green
-            pasteleriaCheck.backgroundColor = UIColor.lightGray
-            charcuteriaCheck.backgroundColor = UIColor.lightGray
-            isPanaderiaCheck = true
-            isPasteleriaCheck = false
-            isCharcuteriaCheck = false
-            
-        }
-    }
-    
-    @IBAction func clickPasteleriaCheck(_ sender: Any) {
-        if (isPasteleriaCheck == false) {
-            pasteleriaCheck.backgroundColor = UIColor.green
-            panaderiaCheck.backgroundColor = UIColor.lightGray
-            charcuteriaCheck.backgroundColor = UIColor.lightGray
-            isPasteleriaCheck = true
-            isPanaderiaCheck = false
-            isCharcuteriaCheck = false
-        }
-    }
-    
-    @IBAction func clickCharcuteriaCheck(_ sender: Any) {
-        if (isCharcuteriaCheck == false) {
-            charcuteriaCheck.backgroundColor = UIColor.green
-            pasteleriaCheck.backgroundColor = UIColor.lightGray
-            panaderiaCheck.backgroundColor = UIColor.lightGray
-            isCharcuteriaCheck = true
-            isPanaderiaCheck = false
-            isPasteleriaCheck = false
-        }
-    }
-    
     // Verificar si existe el cliente
     @IBAction func checkClienteBtn(_ sender: Any) {
-        // Realizamos a consulta a la base de datos
-        ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto, razon_social,ci_rif, dir_fiscal, telefono FROM clientes WHERE ci_rif='V7128215'") { (data) in
+        // Cerramos el teclado
+        dismissKeyboard()
         
-            // Objeto con la informacion de los clientes
-            let cliente = [
-                "auto": ToolsPaseo().obtenerDato(s: data, i: 0),
-                "razon_social": ToolsPaseo().obtenerDato(s: data, i: 1),
-                "ci_rif": ToolsPaseo().obtenerDato(s: data, i: 2),
-                "dir_fiscal": ToolsPaseo().obtenerDato(s: data, i: 3),
-                "telefono": ToolsPaseo().obtenerDato(s: data, i: 4),
-                "fecha_nacimiento": ""
-            ]
+        // Presentamos el loader
+        ToolsPaseo().loadingView(vc: self, msg: "Buscando cliente...")
+        
+        // Cedula de identidad o R.I.F del comprador
+        let tipoDocumento = String(identidadArray[CedulaPicker.selectedRow(inComponent: 0)])
+        let documentoIdentidad = "\(tipoDocumento!)\(cedulaTxt.text!)"
+        
+        // Realizamos a consulta a la base de datos
+        ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto, razon_social,ci_rif, dir_fiscal, celular, fecha_nacimiento FROM clientes WHERE ci_rif='\(documentoIdentidad)' and estatus='Activo'") { (data) in
             
-            if (cliente["auto"] == ""){
-                // Si el cliente no existe se habilitan los campos para poder registrarlo
-                self.nombreTxt.isEnabled = true
-                self.municipioTxt.isEnabled = true
-                self.numeroTxt.isEnabled = true
-                self.operadoraPicker.isUserInteractionEnabled = true
-                self.operadoraPicker.alpha = 1
-                self.nacimientoPicker.isUserInteractionEnabled = true
-                self.nacimientoPicker.alpha = 1
-            
-            } else {
-                // si el cliente ya existe se ingresa la informacion a los inputs siguiendo deshabilitados
-                self.nombreTxt.text = cliente["razon_social"]
-                self.municipioTxt.text = cliente["dir_fiscal"]
-                self.numeroTxt.text = cliente["telefono"]
+            // Quitamos el loading y como callback lo que debe hacer
+            self.dismiss(animated:false){
+                // Objeto con la informacion de los clientes
+                let cliente = [
+                    "auto": ToolsPaseo().obtenerDato(s: data, i: 0),
+                    "razon_social": ToolsPaseo().obtenerDato(s: data, i: 1),
+                    "ci_rif": ToolsPaseo().obtenerDato(s: data, i: 2),
+                    "dir_fiscal": ToolsPaseo().obtenerDato(s: data, i: 3),
+                    "celular": ToolsPaseo().obtenerDato(s: data, i: 4),
+                    "fecha_nacimiento": ToolsPaseo().obtenerDato(s: data, i: 5)
+                ]
+                
+                if (cliente["auto"] == ""){
+                    let cedula = self.cedulaTxt.text!
+                    self.limpiar()
+                
+                    // Activamos que debemos de registrar el cliente
+                    self.registrarCliente = true
+                    
+                    let alerta = UIAlertController(title: "El cliente no existe", message: "Desea crearlo?", preferredStyle: UIAlertControllerStyle.alert)
+                    alerta.addAction(UIAlertAction(title: "Si", style: UIAlertActionStyle.default, handler: { (action) in
+                        /*
+                         Si la opcion es 'SI' al cliente se habilian los campos
+                         */
+                        self.cedulaTxt.text = cedula
+                        self.nombreTxt.isEnabled = true
+                        self.municipioTxt.isEnabled = true
+                        self.numeroTxt.isEnabled = true
+                        self.operadoraPicker.isUserInteractionEnabled = true
+                        self.operadoraPicker.alpha = 1
+                        self.nacimientoPicker.isUserInteractionEnabled = true
+                        self.nacimientoPicker.alpha = 1
+                    }))
+                    alerta.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: nil))
+                    self.present(alerta, animated: true, completion: nil)
+                    
+                    
+                } else {
+                    // Desactivamos que hay que registar el cliente
+                    self.registrarCliente = false
+                    
+                    // si el cliente ya existe se ingresa la informacion a los inputs siguiendo deshabilitados
+                    self.nombreTxt.text = cliente["razon_social"]
+                    self.municipioTxt.text = cliente["dir_fiscal"]
+                    
+                    // Si existe numero celular en la base datos
+                    if (cliente["celular"] != "") {
+                        // Obtener el numero sin la operadora
+                        var index = cliente["celular"]!.index(cliente["celular"]!.startIndex, offsetBy: 4)
+                        var numero = cliente["celular"]!.substring(from: index)
+                        self.numeroTxt.text = numero
+                        
+                        //Obtener la operadora
+                        numero = cliente["celular"]!.substring(to:cliente["celular"]!.index(cliente["celular"]!.startIndex, offsetBy: 4))
+                    
+                        if (numero == "0412") {
+                            self.operadoraPicker.selectRow(0, inComponent: 0, animated: true)
+                        } else if (numero == "0414") {
+                            self.operadoraPicker.selectRow(1, inComponent: 0, animated: true)
+                        } else if (numero == "0424") {
+                            self.operadoraPicker.selectRow(2, inComponent: 0, animated: true)
+                        } else if (numero == "0416") {
+                            self.operadoraPicker.selectRow(3, inComponent: 0, animated: true)
+                        } else if (numero == "0426"){
+                            self.operadoraPicker.selectRow(4, inComponent: 0, animated: true)
+                        }
+                    }
+                    
+                    if(cliente["fecha_nacimiento"] != ""){
+                        let dateString = cliente["fecha_nacimiento"]
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd"
+                        let date = dateFormatter.date(from: dateString!)
+                        self.nacimientoPicker.setDate(date!, animated: false)
+                    }
+                }
             }
         }
     }
@@ -217,8 +273,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             * Numero celular: "(numeroOperadora)(numeroCelular)"
             * Fecha de nacimiento / Solo personas naturales: "(year)-(month)-(day)"
             * Area / Sección a agregar: "01" | 01: Caja, 02: CAFETERIA, 03: CHARCUTERIA, 04: PANADERIA, 05: PIZZERIA
-         
-         
          */
         
         // Cedula de identidad o R.I.F del comprador
@@ -256,6 +310,49 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
         // Insertar a la base de datos
+        
+        if(registrarCliente){
+            
+            
+        }
+    }
+    
+    
+    // Cuando seleciona la seccion panaderia
+    @IBAction func clickPanaderiaCheck(_ sender: Any) {
+        if (isPanaderiaCheck == false) {
+            panaderiaCheck.backgroundColor = UIColor.green
+            pasteleriaCheck.backgroundColor = UIColor.lightGray
+            charcuteriaCheck.backgroundColor = UIColor.lightGray
+            isPanaderiaCheck = true
+            isPasteleriaCheck = false
+            isCharcuteriaCheck = false
+            
+        }
+    }
+    
+    // Cuando seleciona la seccion pasteleria
+    @IBAction func clickPasteleriaCheck(_ sender: Any) {
+        if (isPasteleriaCheck == false) {
+            pasteleriaCheck.backgroundColor = UIColor.green
+            panaderiaCheck.backgroundColor = UIColor.lightGray
+            charcuteriaCheck.backgroundColor = UIColor.lightGray
+            isPasteleriaCheck = true
+            isPanaderiaCheck = false
+            isCharcuteriaCheck = false
+        }
+    }
+    
+    // Cuando seleciona la seccion Charcuteria
+    @IBAction func clickCharcuteriaCheck(_ sender: Any) {
+        if (isCharcuteriaCheck == false) {
+            charcuteriaCheck.backgroundColor = UIColor.green
+            pasteleriaCheck.backgroundColor = UIColor.lightGray
+            panaderiaCheck.backgroundColor = UIColor.lightGray
+            isCharcuteriaCheck = true
+            isPanaderiaCheck = false
+            isPasteleriaCheck = false
+        }
     }
 }
 

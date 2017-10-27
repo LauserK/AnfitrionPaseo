@@ -42,12 +42,23 @@ class ToolsPaseo {
         
         var dataDone: String = ""
         
-        Alamofire.request("http://10.10.8.27:8080/webserver.php/", method: .post, parameters:params, encoding: URLEncoding.default).response { response in
+        Alamofire.request("http://10.10.0.199:8083/webserver.php/", method: .post, parameters:params, encoding: URLEncoding.default).response { response in
             if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
                 dataDone = utf8Text
                 completion(dataDone)
             }
         }
     }
-
+    
+    func loadingView(vc: UIViewController, msg: String){
+        let alert = UIAlertController(title: nil, message: msg, preferredStyle: .alert)
+        
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        loadingIndicator.startAnimating();
+        
+        alert.view.addSubview(loadingIndicator)
+        vc.present(alert, animated: true, completion: nil)
+    }
 }
