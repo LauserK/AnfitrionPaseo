@@ -41,14 +41,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         super.viewDidLoad()
         
         // Inactivar los inputs hasta verificar la existencia del cliente en la DB
-      /*  self.nombreTxt.isEnabled = false
+      /*self.nombreTxt.isEnabled = false
         self.municipioTxt.isEnabled = false
         self.numeroTxt.isEnabled = false
         self.operadoraPicker.isUserInteractionEnabled = false
         self.operadoraPicker.alpha = 0.5
         self.nacimientoPicker.isUserInteractionEnabled = false
         self.nacimientoPicker.alpha = 0.5
-        */
+         */
         self.limpiar()
         
         // Seteamos el formato Day-Month-Year al Picker
@@ -73,7 +73,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let dateString = "2000-01-01"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let date = dateFormatter.date(from: dateString!)
+        let date = dateFormatter.date(from: dateString)
         self.nacimientoPicker.setDate(date!, animated: false)
         
         // Cuando se hace TAP en cualquier lugar oculta el keyboard
