@@ -20,16 +20,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var municipioTxt: UITextField!
     @IBOutlet weak var numeroTxt: UITextField!
     
-    // pseudocheckboxs
-    @IBOutlet weak var panaderiaCheck: UIButton!
-    @IBOutlet weak var pasteleriaCheck: UIButton!
-    @IBOutlet weak var charcuteriaCheck: UIButton!
-    
-    // variables para los pseudocheckbox
-    var isPanaderiaCheck   = false
-    var isCharcuteriaCheck = false
-    var isPasteleriaCheck  = false
-    
     // Vectores para la data de los UIPickerView
     var identidadArray: [String] = [String]()
     var operadoraArray: [String] = [String]()
@@ -37,19 +27,34 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     //Determinar funcion del boton para ingresar a la cola
     var registrarCliente: Bool = false
     
+    // Objetos con la base de informacion de clientes y contribuyentes
+    var cliente = [
+        "auto": "",
+        "razon_social": "",
+        "ci_rif": "",
+        "dir_fiscal": "",
+        "celular": "",
+        "fecha_nacimiento": ""
+    ]
+    
+    var contribuyente = [
+        "auto": "",
+        "razon_social": "",
+        "ci_rif": "",
+        "dir_fiscal": "",
+        "celular": "",
+        "fecha_nacimiento": ""
+    ]
+    
+    var cedula:String = ""
+    var tipoSegue: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Inactivar los inputs hasta verificar la existencia del cliente en la DB
-      /*self.nombreTxt.isEnabled = false
-        self.municipioTxt.isEnabled = false
-        self.numeroTxt.isEnabled = false
-        self.operadoraPicker.isUserInteractionEnabled = false
-        self.operadoraPicker.alpha = 0.5
-        self.nacimientoPicker.isUserInteractionEnabled = false
-        self.nacimientoPicker.alpha = 0.5
-         */
         self.limpiar()
+        
+        self.cedulaTxt.text = cedula
         
         // Seteamos el formato Day-Month-Year al Picker
         self.nacimientoPicker.datePickerMode = .date
@@ -96,19 +101,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.nombreTxt.text = ""
         self.municipioTxt.text = ""
         self.numeroTxt.text = ""
-        self.isPanaderiaCheck = false
-        self.isPasteleriaCheck = false
-        self.isCharcuteriaCheck = false
-        self.pasteleriaCheck.backgroundColor = UIColor.lightGray
-        self.panaderiaCheck.backgroundColor = UIColor.lightGray
-        self.charcuteriaCheck.backgroundColor = UIColor.lightGray
-        self.nombreTxt.isEnabled = false
-        self.municipioTxt.isEnabled = false
-        self.numeroTxt.isEnabled = false
-        self.operadoraPicker.isUserInteractionEnabled = false
-        self.operadoraPicker.alpha = 0.5
-        self.nacimientoPicker.isUserInteractionEnabled = false
-        self.nacimientoPicker.alpha = 0.5
     }
     
     // Cuando se hace tap quita el keyboard
@@ -168,101 +160,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
-    // Verificar si existe el cliente
-    @IBAction func checkClienteBtn(_ sender: Any) {
-        // Cerramos el teclado
-        dismissKeyboard()
-        
-        // Presentamos el loader
-        ToolsPaseo().loadingView(vc: self, msg: "Buscando cliente...")
-        
-        // Cedula de identidad o R.I.F del comprador
-        let tipoDocumento = String(identidadArray[CedulaPicker.selectedRow(inComponent: 0)])
-        let documentoIdentidad = "\(tipoDocumento!)\(cedulaTxt.text!)"
-        
-        // Realizamos a consulta a la base de datos
-        ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto, razon_social,ci_rif, dir_fiscal, celular, fecha_nacimiento FROM clientes WHERE ci_rif='\(documentoIdentidad)' and estatus='Activo'") { (data) in
-            
-            // Quitamos el loading y como callback lo que debe hacer
-            self.dismiss(animated:false){
-                // Objeto con la informacion de los clientes
-                let cliente = [
-                    "auto": ToolsPaseo().obtenerDato(s: data, i: 0),
-                    "razon_social": ToolsPaseo().obtenerDato(s: data, i: 1),
-                    "ci_rif": ToolsPaseo().obtenerDato(s: data, i: 2),
-                    "dir_fiscal": ToolsPaseo().obtenerDato(s: data, i: 3),
-                    "celular": ToolsPaseo().obtenerDato(s: data, i: 4),
-                    "fecha_nacimiento": ToolsPaseo().obtenerDato(s: data, i: 5)
-                ]
-                
-                if (cliente["auto"] == ""){
-                    let cedula = self.cedulaTxt.text!
-                    self.limpiar()
-                
-                    // Activamos que debemos de registrar el cliente
-                    self.registrarCliente = true
-                    
-                    let alerta = UIAlertController(title: "El cliente no existe", message: "Desea crearlo?", preferredStyle: UIAlertControllerStyle.alert)
-                    alerta.addAction(UIAlertAction(title: "Si", style: UIAlertActionStyle.default, handler: { (action) in
-                        /*
-                         Si la opcion es 'SI' al cliente se habilian los campos
-                         */
-                        self.cedulaTxt.text = cedula
-                        self.nombreTxt.isEnabled = true
-                        self.municipioTxt.isEnabled = true
-                        self.numeroTxt.isEnabled = true
-                        self.operadoraPicker.isUserInteractionEnabled = true
-                        self.operadoraPicker.alpha = 1
-                        self.nacimientoPicker.isUserInteractionEnabled = true
-                        self.nacimientoPicker.alpha = 1
-                    }))
-                    alerta.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: nil))
-                    self.present(alerta, animated: true, completion: nil)
-                    
-                    
-                } else {
-                    // Desactivamos que hay que registar el cliente
-                    self.registrarCliente = false
-                    
-                    // si el cliente ya existe se ingresa la informacion a los inputs siguiendo deshabilitados
-                    self.nombreTxt.text = cliente["razon_social"]
-                    self.municipioTxt.text = cliente["dir_fiscal"]
-                    
-                    // Si existe numero celular en la base datos
-                    if (cliente["celular"] != "") {
-                        // Obtener el numero sin la operadora
-                        var index = cliente["celular"]!.index(cliente["celular"]!.startIndex, offsetBy: 4)
-                        var numero = cliente["celular"]!.substring(from: index)
-                        self.numeroTxt.text = numero
-                        
-                        //Obtener la operadora
-                        numero = cliente["celular"]!.substring(to:cliente["celular"]!.index(cliente["celular"]!.startIndex, offsetBy: 4))
-                    
-                        if (numero == "0412") {
-                            self.operadoraPicker.selectRow(0, inComponent: 0, animated: true)
-                        } else if (numero == "0414") {
-                            self.operadoraPicker.selectRow(1, inComponent: 0, animated: true)
-                        } else if (numero == "0424") {
-                            self.operadoraPicker.selectRow(2, inComponent: 0, animated: true)
-                        } else if (numero == "0416") {
-                            self.operadoraPicker.selectRow(3, inComponent: 0, animated: true)
-                        } else if (numero == "0426"){
-                            self.operadoraPicker.selectRow(4, inComponent: 0, animated: true)
-                        }
-                    }
-                    
-                    if(cliente["fecha_nacimiento"] != ""){
-                        let dateString = cliente["fecha_nacimiento"]
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "yyyy-MM-dd"
-                        let date = dateFormatter.date(from: dateString!)
-                        self.nacimientoPicker.setDate(date!, animated: false)
-                    }
-                }
-            }
-        }
-    }
-    
     // Enviar la informacion a la base de datos
     @IBAction func sendBtn(_ sender: Any) {
         /*
@@ -280,78 +177,58 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let documentoIdentidad = "\(tipoDocumento!)\(cedulaTxt.text!)"
         
         // Nombre y Apellido o Razon Socal del comprador
-        let nombre = nombreTxt!
+        let nombre = nombreTxt.text!
         
         // Municipio
-        let municipio = municipioTxt!
+        let municipio = municipioTxt.text!
         
         // Numero celular
         let operadora = String(operadoraArray[operadoraPicker.selectedRow(inComponent: 0)])
         let numeroCelular = "\(operadora!)\(numeroTxt.text!)"
         
+        var fechaNacimiento = ""
         // Fecha de nacimiento solo si es persona natural
         if (tipoDocumento == "V" || tipoDocumento == "E"){
-            var formater = DateFormatter()
+            let formater = DateFormatter()
             formater.dateFormat = "yyyy-MM-dd"
             let fechaNacimientoOld = nacimientoPicker.date
-            let fechaNacimiento = formater.string(from: fechaNacimientoOld)
+            fechaNacimiento = formater.string(from: fechaNacimientoOld)
+        }
+        
+        // Insertar a la base de datos y regresar los datos al primer view
+        if (tipoSegue == "crearCliente"){
+            self.cliente = [
+                "auto": "",
+                "razon_social": nombre,
+                "ci_rif": documentoIdentidad,
+                "dir_fiscal": municipio,
+                "celular": numeroCelular,
+                "fecha_nacimiento": fechaNacimiento,
+                "created": "1"
+            ]
         } else {
-            let fechaNacimiento = ""
+            self.contribuyente = [
+                "auto": "",
+                "razon_social": nombre,
+                "ci_rif": documentoIdentidad,
+                "dir_fiscal": municipio,
+                "celular": numeroCelular,
+                "fecha_nacimiento": fechaNacimiento,
+                "created": "1"
+            ]
         }
         
-        // Seccion a la cual se va a agregar a la cola virtual
-        var seccion = ""
-        if (isPanaderiaCheck == true){
-            seccion = "04"
-        } else if (isCharcuteriaCheck == true){
-            seccion = "03"
-        } else if (isPasteleriaCheck == true) {
-            seccion = "06"
-        }
+        let sql = "INSERT INTO `00000001`.`clientes` (`auto`, `codigo`, `nombre`, `ci_rif`, `razon_social`, `auto_grupo`, `dir_fiscal`, `dir_despacho`, `contacto`, `telefono`, `email`, `website`, `pais`, `denominacion_fiscal`, `auto_estado`, `auto_zona`, `codigo_postal`, `retencion_iva`, `retencion_islr`, `auto_vendedor`, `tarifa`, `descuento`, `recargo`, `estatus_credito`, `dias_credito`, `limite_credito`, `doc_pendientes`, `estatus_morosidad`, `estatus_lunes`, `estatus_martes`, `estatus_miercoles`, `estatus_jueves`, `estatus_viernes`, `estatus_sabado`, `estatus_domingo`, `auto_cobrador`, `fecha_alta`, `fecha_baja`, `fecha_ult_venta`, `fecha_ult_pago`, `fecha_nacimiento`, `anticipos`, `debitos`, `creditos`, `saldo`, `disponible`, `memo`, `aviso`, `estatus`, `cuenta`, `iban`, `swit`, `auto_agencia`, `dir_banco`, `auto_codigo_cobrar`, `auto_codigo_ingresos`, `auto_codigo_anticipos`, `categoria`, `descuento_pronto_pago`, `importe_ult_pago`, `importe_ult_venta`, `telefono2`, `fax`, `celular`) VALUES ('0000000648', 'V26642386', 'JUAN JOSE SANCHEZ DA SILVA', 'V26642386', 'JUAN JOSE SANCHEZ DA SILVA', '0000000001', 'VALENCIA', '', '', '', '', '', '', '', '0000000001', '0000000001', '', '0.00', '0.00', '0000000001', '', '0.00', '0.00', '', '0', '0.00', '0', '', '', '', '', '', '', '', '', '0000000001', '2000-01-01', '2000-01-01', '2000-01-01', '2000-01-01', '2000-01-31', '0.00', '0.00', '0.00', '0.00', '0.00', '', '', 'Activo', '', '', '', '0000000001', '', '0000000001', '0000000001', '0000000001', '0000000001', '0.00', '0.00', '0.00', '', '', '04145811317')"
         
-        // Insertar a la base de datos
-        
-        if(registrarCliente){
-            
-            
-        }
+        self.performSegue(withIdentifier: "principal", sender: self)
     }
     
-    
-    // Cuando seleciona la seccion panaderia
-    @IBAction func clickPanaderiaCheck(_ sender: Any) {
-        if (isPanaderiaCheck == false) {
-            panaderiaCheck.backgroundColor = UIColor.green
-            pasteleriaCheck.backgroundColor = UIColor.lightGray
-            charcuteriaCheck.backgroundColor = UIColor.lightGray
-            isPanaderiaCheck = true
-            isPasteleriaCheck = false
-            isCharcuteriaCheck = false
-            
-        }
-    }
-    
-    // Cuando seleciona la seccion pasteleria
-    @IBAction func clickPasteleriaCheck(_ sender: Any) {
-        if (isPasteleriaCheck == false) {
-            pasteleriaCheck.backgroundColor = UIColor.green
-            panaderiaCheck.backgroundColor = UIColor.lightGray
-            charcuteriaCheck.backgroundColor = UIColor.lightGray
-            isPasteleriaCheck = true
-            isPanaderiaCheck = false
-            isCharcuteriaCheck = false
-        }
-    }
-    
-    // Cuando seleciona la seccion Charcuteria
-    @IBAction func clickCharcuteriaCheck(_ sender: Any) {
-        if (isCharcuteriaCheck == false) {
-            charcuteriaCheck.backgroundColor = UIColor.green
-            pasteleriaCheck.backgroundColor = UIColor.lightGray
-            panaderiaCheck.backgroundColor = UIColor.lightGray
-            isCharcuteriaCheck = true
-            isPanaderiaCheck = false
-            isPasteleriaCheck = false
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "principal" {
+            if let destination = segue.destination as? HomeController {
+                destination.cliente = self.cliente
+                destination.contribuyente = self.contribuyente
+            }
         }
     }
 }

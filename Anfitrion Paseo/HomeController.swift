@@ -17,6 +17,8 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var cedulaContribuyenteTxt: UITextField!
     @IBOutlet weak var contribuyenteTxt: UITextField!
     @IBOutlet weak var irAColaVirtualBtn: UIButton!
+    @IBOutlet weak var validarCliente: UIButton!
+    @IBOutlet weak var validarContribuyente: UIButton!
     
     /*
      Variables para checkbox
@@ -45,19 +47,32 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         "ci_rif": "",
         "dir_fiscal": "",
         "celular": "",
-        "fecha_nacimiento": ""
+        "fecha_nacimiento": "",
+        "created": ""
     ]
     
     var contribuyente = [
         "auto": "",
         "razon_social": "",
         "ci_rif": "",
-        "dir_fiscal": ""
+        "dir_fiscal": "",
+        "created":""
     ]
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if (self.cliente["created"] == "1") {
+            self.nombreTxt.text = self.cliente["razon_social"]
+            self.cedulaTxt.text = self.cliente["ci_rif"]
+            self.validarCliente.setTitle("EDITAR", for: .normal)
+        }
+        
+        if (self.contribuyente["created"] == "1"){
+            self.contribuyenteTxt.text = self.contribuyente["razon_social"]
+            self.cedulaContribuyenteTxt.text = self.contribuyente["ci_rif"]
+            self.validarContribuyente.setTitle("EDITAR", for: .normal)
+        }
         
         // Desactivamos los inputs
         self.nombreTxt.isEnabled = false
@@ -86,16 +101,16 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         // Presentamos el loader
         ToolsPaseo().loadingView(vc: self, msg: "Buscando cliente...")
-        
+
         // Cedula de identidad o R.I.F del comprador
-        let tipoDocumento = String(identidadArray[cedulaPicker.selectedRow(inComponent: 0)])
-        let documentoIdentidad = "\(tipoDocumento!)\(cedulaTxt.text!)"
+        let tipoDocumento = String(self.identidadArray[self.cedulaPicker.selectedRow(inComponent: 0)])
+        let documentoIdentidad = "\(tipoDocumento!)\(self.cedulaTxt.text!)"
         
         // Realizamos a consulta a la base de datos
         ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto, razon_social,ci_rif, dir_fiscal, celular, fecha_nacimiento FROM clientes WHERE ci_rif='\(documentoIdentidad)' and estatus='Activo'") { (data) in
             
             // Quitamos el loading y como callback lo que debe hacer
-            self.dismiss(animated:false){
+            self.dismiss(animated: false){
                 // Objeto con la informacion de los clientes
                 self.cliente["auto"] = ToolsPaseo().obtenerDato(s: data, i: 0)
                 self.cliente["razon_social"] = ToolsPaseo().obtenerDato(s: data, i: 1)
@@ -103,13 +118,17 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 self.cliente["dir_fiscal"] = ToolsPaseo().obtenerDato(s: data, i: 3)
                 self.cliente["celular"] = ToolsPaseo().obtenerDato(s: data, i: 4)
                 self.cliente["fecha_nacimiento"] = ToolsPaseo().obtenerDato(s: data, i: 5)
+                self.cliente["created"] = "1"
                 
                 if (self.cliente["auto"] == ""){
-                    let alerta = UIAlertController(title: "El cliente no existe", message: "Desea crearlo?", preferredStyle: UIAlertControllerStyle.alert)
+                    let alerta = UIAlertController(title: "El cliente no existe", message: "¿Desea crearlo?", preferredStyle: UIAlertControllerStyle.alert)
                     alerta.addAction(UIAlertAction(title: "Si", style: UIAlertActionStyle.default, handler: { (action) in
                         /*
                          Si la opcion es 'SI' al cliente se habilian los campos
                          */
+                        
+                        // cambiamos la pantalla para registrar el cliente
+                        self.performSegue(withIdentifier: "crearCliente", sender: self)
                         
                     }))
                     alerta.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: nil))
@@ -134,16 +153,15 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         dismissKeyboard()
         
         // Presentamos el loader
-        ToolsPaseo().loadingView(vc: self, msg: "Buscando cliente...")
+        ToolsPaseo().loadingView(vc: self, msg: "Buscando contribuyente...")
         
         // Cedula de identidad o R.I.F del comprador
-        let tipoDocumento = String(contribuyenteArray[contribuyentePicker.selectedRow(inComponent: 0)])
-        let documentoIdentidad = "\(tipoDocumento!)\(cedulaContribuyenteTxt.text!)"
+        let tipoDocumento = String(self.contribuyenteArray[self.contribuyentePicker.selectedRow(inComponent: 0)])
+        let documentoIdentidad = "\(tipoDocumento!)\(self.cedulaContribuyenteTxt.text!)"
         
         // Realizamos a consulta a la base de datos
         ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto, razon_social,ci_rif, dir_fiscal, celular, fecha_nacimiento FROM clientes WHERE ci_rif='\(documentoIdentidad)' and estatus='Activo'") { (data) in
             
-            // Quitamos el loading y como callback lo que debe hacer
             self.dismiss(animated:false){
                 // Objeto con la informacion de los clientes
                 self.contribuyente["auto"] = ToolsPaseo().obtenerDato(s: data, i: 0)
@@ -154,17 +172,15 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 self.contribuyente["fecha_nacimiento"] = ToolsPaseo().obtenerDato(s: data, i: 5)
                 
                 if (self.contribuyente["auto"] == ""){
-                    let alerta = UIAlertController(title: "El cliente no existe", message: "Desea crearlo?", preferredStyle: UIAlertControllerStyle.alert)
-                    alerta.addAction(UIAlertAction(title: "Si", style: UIAlertActionStyle.default, handler: { (action) in
+                    let alerta = UIAlertController(title: "El contribuyente no existe", message: "¿Desea crearlo?", preferredStyle: UIAlertControllerStyle.alert)
+                    alerta.addAction(UIAlertAction(title: "Si", style: UIAlertActionStyle.default, handler: { action in
                         /*
                          Si la opcion es 'SI' al cliente se habilian los campos
                          */
-                        
+                        self.performSegue(withIdentifier: "crearContribuyente", sender: self)
                     }))
                     alerta.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: nil))
                     self.present(alerta, animated: true, completion: nil)
-                    
-                    
                 } else {
                     // si el cliente ya existe se ingresa la informacion a los inputs siguiendo deshabilitados
                     self.contribuyenteTxt.text = self.contribuyente["razon_social"]
@@ -179,7 +195,6 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     // Cuando envimaos a la cola
     @IBAction func enviarAColaVirtual(_ sender: Any) {
-        
         // Realizamos el insert a la DB
         ToolsPaseo().consultarDB(id: "open", sql: "") { (data) in
             
@@ -284,6 +299,21 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "crearCliente" {
+            if let destination = segue.destination as? ViewController {
+                destination.cedula = self.cedulaTxt.text!
+                destination.tipoSegue = "crearCliente"
+            }
+        } else if segue.identifier == "crearContribuyente" {
+            if let destination = segue.destination as? ViewController {
+                destination.cedula = self.cedulaContribuyenteTxt.text!
+                destination.cliente = self.cliente
+                destination.tipoSegue = "crearContribuyente"
+            }
+        }
     }
     
 }
