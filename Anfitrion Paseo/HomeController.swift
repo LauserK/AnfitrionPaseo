@@ -109,17 +109,26 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // Realizamos a consulta a la base de datos
         ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto, razon_social,ci_rif, dir_fiscal, celular, fecha_nacimiento FROM clientes WHERE ci_rif='\(documentoIdentidad)' and estatus='Activo'") { (data) in
             
+            // Objeto con la informacion de los clientes
+            self.cliente["auto"] = ToolsPaseo().obtenerDato(s: data, i: 0)
+            self.cliente["razon_social"] = ToolsPaseo().obtenerDato(s: data, i: 1)
+            self.cliente["ci_rif"] = ToolsPaseo().obtenerDato(s: data, i: 2)
+            self.cliente["dir_fiscal"] = ToolsPaseo().obtenerDato(s: data, i: 3)
+            self.cliente["celular"] = ToolsPaseo().obtenerDato(s: data, i: 4)
+            self.cliente["fecha_nacimiento"] = ToolsPaseo().obtenerDato(s: data, i: 5)
+            self.cliente["created"] = "1"
+            
+            // Busca la cuenta
+            ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto FROM pos_cuentas WHERE cuenta='\(self.cliente["ci_rif"])'") { (data) in
+                let auto_cuenta = ToolsPaseo().obtenerDato(s: data, i: 0)
+                
+                if (auto_cuenta == "") {
+                    //ToolsPaseo().consultarDB(id: "open", sql: "", completion: <#T##(String) -> Void#>)
+                    //CREAR CUENTA
+                }
+            }
             // Quitamos el loading y como callback lo que debe hacer
             self.dismiss(animated: false){
-                // Objeto con la informacion de los clientes
-                self.cliente["auto"] = ToolsPaseo().obtenerDato(s: data, i: 0)
-                self.cliente["razon_social"] = ToolsPaseo().obtenerDato(s: data, i: 1)
-                self.cliente["ci_rif"] = ToolsPaseo().obtenerDato(s: data, i: 2)
-                self.cliente["dir_fiscal"] = ToolsPaseo().obtenerDato(s: data, i: 3)
-                self.cliente["celular"] = ToolsPaseo().obtenerDato(s: data, i: 4)
-                self.cliente["fecha_nacimiento"] = ToolsPaseo().obtenerDato(s: data, i: 5)
-                self.cliente["created"] = "1"
-                
                 if (self.cliente["auto"] == ""){
                     let alerta = UIAlertController(title: "El cliente no existe", message: "¿Desea crearlo?", preferredStyle: UIAlertControllerStyle.alert)
                     alerta.addAction(UIAlertAction(title: "Si", style: UIAlertActionStyle.default, handler: { (action) in
@@ -195,12 +204,25 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     // Cuando envimaos a la cola
     @IBAction func enviarAColaVirtual(_ sender: Any) {
+        // Loading
+        ToolsPaseo().loadingView(vc: self, msg: "Cargando...")
+        
+        // Seccion a la cual se va a agregar a la cola virtual
+        var seccion = ""
+        if (isPanaderiaCheck == true){
+            seccion = "04"
+        } else if (isCharcuteriaCheck == true){
+            seccion = "03"
+        } else if (isPasteleriaCheck == true) {
+            seccion = "06"
+        }
+        
         // Realizamos el insert a la DB
-        ToolsPaseo().consultarDB(id: "open", sql: "") { (data) in
+        ToolsPaseo().consultarDB(id: "open", sql: "INSERT INTO `00000001`.`pos_turno` (`id`, `seccion`, `cirif`, `nombre`, `estatus`) VALUES (NULL, '\(seccion)', '\(self.cliente["ci_rif"]!)', '\(self.cliente["razon_social"]!)', '0');") { (data) in
             
             // Quitamos el loading y como callback lo que debe hacer
             self.dismiss(animated:false){
-                
+                print("Data:'\(data)':END")
             }
         }
         

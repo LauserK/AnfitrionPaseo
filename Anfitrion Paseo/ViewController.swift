@@ -46,6 +46,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         "fecha_nacimiento": ""
     ]
     
+    var auto_cuenta = ""
+    
     var cedula:String = ""
     var tipoSegue: String = ""
     
@@ -186,7 +188,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let operadora = String(operadoraArray[operadoraPicker.selectedRow(inComponent: 0)])
         let numeroCelular = "\(operadora!)\(numeroTxt.text!)"
         
-        var fechaNacimiento = ""
+        var fechaNacimiento = "2000-01-01"
         // Fecha de nacimiento solo si es persona natural
         if (tipoDocumento == "V" || tipoDocumento == "E"){
             let formater = DateFormatter()
@@ -195,32 +197,64 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             fechaNacimiento = formater.string(from: fechaNacimientoOld)
         }
         
+        //Abrir loading
+        ToolsPaseo().loadingView(vc: self, msg: "Creando cliente...")
+        
         // Insertar a la base de datos y regresar los datos al primer view
-        if (tipoSegue == "crearCliente"){
-            self.cliente = [
-                "auto": "",
-                "razon_social": nombre,
-                "ci_rif": documentoIdentidad,
-                "dir_fiscal": municipio,
-                "celular": numeroCelular,
-                "fecha_nacimiento": fechaNacimiento,
-                "created": "1"
-            ]
-        } else {
-            self.contribuyente = [
-                "auto": "",
-                "razon_social": nombre,
-                "ci_rif": documentoIdentidad,
-                "dir_fiscal": municipio,
-                "celular": numeroCelular,
-                "fecha_nacimiento": fechaNacimiento,
-                "created": "1"
-            ]
+        ToolsPaseo().consultarDB(id: "open", sql: "SELECT a_clientes FROM sistema_contadores limit 1"){ data in
+            
+            let auto = Int(ToolsPaseo().obtenerDato(s: data, i: 0))!
+            let auto_nuevo = auto + 1
+            let auto_cliente = String(format: "%010d", auto_nuevo)
+            
+            let sql = "INSERT INTO `00000001`.`clientes` (`auto`, `codigo`, `nombre`, `ci_rif`, `razon_social`, `auto_grupo`, `dir_fiscal`, `dir_despacho`, `contacto`, `telefono`, `email`, `website`, `pais`, `denominacion_fiscal`, `auto_estado`, `auto_zona`, `codigo_postal`, `retencion_iva`, `retencion_islr`, `auto_vendedor`, `tarifa`, `descuento`, `recargo`, `estatus_credito`, `dias_credito`, `limite_credito`, `doc_pendientes`, `estatus_morosidad`, `estatus_lunes`, `estatus_martes`, `estatus_miercoles`, `estatus_jueves`, `estatus_viernes`, `estatus_sabado`, `estatus_domingo`, `auto_cobrador`, `fecha_alta`, `fecha_baja`, `fecha_ult_venta`, `fecha_ult_pago`, `fecha_nacimiento`, `anticipos`, `debitos`, `creditos`, `saldo`, `disponible`, `memo`, `aviso`, `estatus`, `cuenta`, `iban`, `swit`, `auto_agencia`, `dir_banco`, `auto_codigo_cobrar`, `auto_codigo_ingresos`, `auto_codigo_anticipos`, `categoria`, `descuento_pronto_pago`, `importe_ult_pago`, `importe_ult_venta`, `telefono2`, `fax`, `celular`) VALUES ('\(auto_cliente)', '\(documentoIdentidad)', '\(nombre)', '\(documentoIdentidad)', '\(nombre)', '0000000001', '\(municipio)', '', '', '', '', '', '', 'No Contribuyente', '0000000001', '0000000001', '', '0.00', '0.00', '0000000001', '1', '0.00', '0.00', '', '0', '0.00', '0', '', '', '', '', '', '', '', '', '0000000001', '2000-01-01', '2000-01-01', '2000-01-01', '2000-01-01', '\(fechaNacimiento)', '0.00', '0.00', '0.00', '0.00', '0.00', '', '', 'Activo', '', '', '', '0000000001', '', '0000000001', '0000000001', '0000000001', 'Eventual', '0.00', '0.00', '0.00', '', '', '\(numeroCelular)')"
+            
+            ToolsPaseo().consultarDB(id: "open", sql: sql){ data in
+                if (self.tipoSegue == "crearCliente"){
+                    self.cliente = [
+                        "auto": "",
+                        "razon_social": nombre,
+                        "ci_rif": documentoIdentidad,
+                        "dir_fiscal": municipio,
+                        "celular": numeroCelular,
+                        "fecha_nacimiento": fechaNacimiento,
+                        "created": "1"
+                    ]
+                } else {
+                    self.contribuyente = [
+                        "auto": "",
+                        "razon_social": nombre,
+                        "ci_rif": documentoIdentidad,
+                        "dir_fiscal": municipio,
+                        "celular": numeroCelular,
+                        "fecha_nacimiento": fechaNacimiento,
+                        "created": "1"
+                    ]
+                }
+                
+                
+                if (self.tipoSegue == "crearCliente"){
+                    // Busca la cuenta
+                    ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto FROM pos_cuentas WHERE cuenta='\(self.cliente["ci_rif"])'") { (data) in
+                        self.auto_cuenta = ToolsPaseo().obtenerDato(s: data, i: 0)
+                        
+                        if (self.auto_cuenta == "") {
+                            print("no existe cuenta")
+                        }
+                    }
+                }
+                
+                
+                let query = "UPDATE `00000001`.`sistema_contadores` SET `a_clientes` = '\(auto_nuevo)' WHERE a_clientes != '' LIMIT 1"
+                ToolsPaseo().consultarDB(id: "open", sql: query){ (data) in
+                    self.dismiss(animated: false){
+                        self.performSegue(withIdentifier: "principal", sender: self)
+                    }
+                }
+                
+                
+            }
         }
-        
-        let sql = "INSERT INTO `00000001`.`clientes` (`auto`, `codigo`, `nombre`, `ci_rif`, `razon_social`, `auto_grupo`, `dir_fiscal`, `dir_despacho`, `contacto`, `telefono`, `email`, `website`, `pais`, `denominacion_fiscal`, `auto_estado`, `auto_zona`, `codigo_postal`, `retencion_iva`, `retencion_islr`, `auto_vendedor`, `tarifa`, `descuento`, `recargo`, `estatus_credito`, `dias_credito`, `limite_credito`, `doc_pendientes`, `estatus_morosidad`, `estatus_lunes`, `estatus_martes`, `estatus_miercoles`, `estatus_jueves`, `estatus_viernes`, `estatus_sabado`, `estatus_domingo`, `auto_cobrador`, `fecha_alta`, `fecha_baja`, `fecha_ult_venta`, `fecha_ult_pago`, `fecha_nacimiento`, `anticipos`, `debitos`, `creditos`, `saldo`, `disponible`, `memo`, `aviso`, `estatus`, `cuenta`, `iban`, `swit`, `auto_agencia`, `dir_banco`, `auto_codigo_cobrar`, `auto_codigo_ingresos`, `auto_codigo_anticipos`, `categoria`, `descuento_pronto_pago`, `importe_ult_pago`, `importe_ult_venta`, `telefono2`, `fax`, `celular`) VALUES ('0000000648', 'V26642386', 'JUAN JOSE SANCHEZ DA SILVA', 'V26642386', 'JUAN JOSE SANCHEZ DA SILVA', '0000000001', 'VALENCIA', '', '', '', '', '', '', '', '0000000001', '0000000001', '', '0.00', '0.00', '0000000001', '', '0.00', '0.00', '', '0', '0.00', '0', '', '', '', '', '', '', '', '', '0000000001', '2000-01-01', '2000-01-01', '2000-01-01', '2000-01-01', '2000-01-31', '0.00', '0.00', '0.00', '0.00', '0.00', '', '', 'Activo', '', '', '', '0000000001', '', '0000000001', '0000000001', '0000000001', '0000000001', '0.00', '0.00', '0.00', '', '', '04145811317')"
-        
-        self.performSegue(withIdentifier: "principal", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -228,6 +262,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             if let destination = segue.destination as? HomeController {
                 destination.cliente = self.cliente
                 destination.contribuyente = self.contribuyente
+                destination.isReady = true
+                
+                
+                if (self.contribuyente["razon_social"] != ""){
+                    destination.contribuyenteCheck.backgroundColor = UIColor.green
+                    destination.isContribuyenteCheck = true
+                }
             }
         }
     }
