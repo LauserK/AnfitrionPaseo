@@ -64,7 +64,7 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         super.viewDidLoad()
         if (self.cliente["created"] == "1") {
             self.nombreTxt.text = self.cliente["razon_social"]
-            self.cedulaTxt.text = self.cliente["ci_rif"]
+            self.cedulaTxt.text = self.cliente["ci_rif"]!.replacingOccurrences(of: "V", with: "", options: NSString.CompareOptions.literal, range:nil)
             self.validarCliente.setTitle("EDITAR", for: .normal)
         }
         
@@ -74,16 +74,8 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             self.validarContribuyente.setTitle("EDITAR", for: .normal)
         }
         
-        // Desactivamos los inputs
-        self.nombreTxt.isEnabled = false
-        self.contribuyenteTxt.isEnabled = false
-        self.cedulaContribuyenteTxt.isEnabled = false
-        self.cedulaContribuyenteTxt.isEnabled = false
-        self.contribuyentePicker.alpha = 0.5
-        self.contribuyentePicker.isUserInteractionEnabled = false
-        self.irAColaVirtualBtn.isEnabled = false
-        self.irAColaVirtualBtn.isUserInteractionEnabled = false
-        self.irAColaVirtualBtn.alpha = 0.5
+        self.desactivarDatos()
+        
         // Connect data PickerView
         self.contribuyentePicker.delegate = self
         self.contribuyentePicker.dataSource = self
@@ -118,15 +110,6 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             self.cliente["fecha_nacimiento"] = ToolsPaseo().obtenerDato(s: data, i: 5)
             self.cliente["created"] = "1"
             
-            // Busca la cuenta
-            ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto FROM pos_cuentas WHERE cuenta='\(self.cliente["ci_rif"])'") { (data) in
-                let auto_cuenta = ToolsPaseo().obtenerDato(s: data, i: 0)
-                
-                if (auto_cuenta == "") {
-                    //ToolsPaseo().consultarDB(id: "open", sql: "", completion: <#T##(String) -> Void#>)
-                    //CREAR CUENTA
-                }
-            }
             // Quitamos el loading y como callback lo que debe hacer
             self.dismiss(animated: false){
                 if (self.cliente["auto"] == ""){
@@ -151,6 +134,17 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     self.irAColaVirtualBtn.isEnabled = true
                     self.irAColaVirtualBtn.isUserInteractionEnabled = true
                     self.irAColaVirtualBtn.alpha = 1
+                    
+                    
+                    // Busca la cuenta si no existe la crea
+                    ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto FROM pos_cuentas WHERE cuenta='\(self.cliente["ci_rif"])'") { (data) in
+                        let auto_cuenta = ToolsPaseo().obtenerDato(s: data, i: 0)
+                        
+                        // Si por alguna razon no se creo la cuenta, se crea al momento de traer la info
+                        if (auto_cuenta == "") {
+                            ToolsPaseo().crearCuenta(ci_rif: self.cliente["ci_rif"]!)
+                        }
+                    }
                 }
             }
         }
@@ -174,11 +168,7 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             self.dismiss(animated:false){
                 // Objeto con la informacion de los clientes
                 self.contribuyente["auto"] = ToolsPaseo().obtenerDato(s: data, i: 0)
-                self.contribuyente["razon_social"] = ToolsPaseo().obtenerDato(s: data, i: 1)
-                self.contribuyente["ci_rif"] = ToolsPaseo().obtenerDato(s: data, i: 2)
-                self.contribuyente["dir_fiscal"] = ToolsPaseo().obtenerDato(s: data, i: 3)
-                self.contribuyente["celular"] = ToolsPaseo().obtenerDato(s: data, i: 4)
-                self.contribuyente["fecha_nacimiento"] = ToolsPaseo().obtenerDato(s: data, i: 5)
+                
                 
                 if (self.contribuyente["auto"] == ""){
                     let alerta = UIAlertController(title: "El contribuyente no existe", message: "¿Desea crearlo?", preferredStyle: UIAlertControllerStyle.alert)
@@ -192,6 +182,12 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     self.present(alerta, animated: true, completion: nil)
                 } else {
                     // si el cliente ya existe se ingresa la informacion a los inputs siguiendo deshabilitados
+                    self.contribuyente["razon_social"] = ToolsPaseo().obtenerDato(s: data, i: 1)
+                    self.contribuyente["ci_rif"] = ToolsPaseo().obtenerDato(s: data, i: 2)
+                    self.contribuyente["dir_fiscal"] = ToolsPaseo().obtenerDato(s: data, i: 3)
+                    self.contribuyente["celular"] = ToolsPaseo().obtenerDato(s: data, i: 4)
+                    self.contribuyente["fecha_nacimiento"] = ToolsPaseo().obtenerDato(s: data, i: 5)
+                    self.contribuyente["created"] = "1"
                     self.contribuyenteTxt.text = self.contribuyente["razon_social"]
                     self.isReady = true
                     self.irAColaVirtualBtn.isEnabled = true
@@ -217,12 +213,53 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             seccion = "06"
         }
         
+        if (self.contribuyente["created"] == "1"){
+            /*
+             Rutina para validar si existe una afiliacion con el cliente
+             */
+            
+            // Verificar si existe una afiliacion entre la empresa y el cliente
+            ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto FROM clientes_afiliados WHERE auto_clientes = '\(self.contribuyente["auto"])' AND ci_titular = '\(self.cliente["ci_rif"])' LIMIT 1"){ (data) in
+                
+                let auto_afiliado = ToolsPaseo().obtenerDato(s: data, i: 0)
+                if (auto_afiliado == "") {
+                    // Crear cuenta y actualizar contadores
+                    ToolsPaseo().consultarDB(id: "open", sql: "SELECT a_clientes_afiliados FROM sistema_contadores limit 1"){ data in
+                        let auto = Int(ToolsPaseo().obtenerDato(s: data, i: 0))!
+                        let auto_nuevo = auto + 1
+                        let auto_cuentas = String(format: "%010d", auto_nuevo)
+                        
+                        let sql = "INSERT INTO `00000001`.`clientes_afiliados` (`auto_clientes`, `ci_titular`, `ci_beneficiario`, `nombre_titular`, `nombre_beneficiario`, `auto`) VALUES ('\(self.contribuyente["auto"]!)', '\(self.cliente["ci_rif"]!)', '', '\(self.cliente["razon_social"]!)', '', '\(auto_cuentas)')"
+                        
+                        ToolsPaseo().consultarDB(id: "open", sql: sql){ (data) in
+                            
+                            // Verificamos si no existe algun error
+                            if data.range(of:"Error") == nil {
+                                ToolsPaseo().consultarDB(id: "open", sql: "UPDATE `00000001`.`sistema_contadores` SET `a_clientes_afiliados` = '\(auto_nuevo)' WHERE a_clientes_afiliados != '' LIMIT 1"){(data) in}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        
         // Realizamos el insert a la DB
         ToolsPaseo().consultarDB(id: "open", sql: "INSERT INTO `00000001`.`pos_turno` (`id`, `seccion`, `cirif`, `nombre`, `estatus`) VALUES (NULL, '\(seccion)', '\(self.cliente["ci_rif"]!)', '\(self.cliente["razon_social"]!)', '0');") { (data) in
             
             // Quitamos el loading y como callback lo que debe hacer
             self.dismiss(animated:false){
-                print("Data:'\(data)':END")
+                // Declare Alert message
+                let dialogMessage = UIAlertController(title: "¡MENSAJE!", message: "¡Cliente registrado a la cola virtual!", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+                    //AQUI HAY QUE LIMPIAR TODOS LOS DATOS PARA PODER ATENDER AL NUEVO CLIENTE
+                    self.desactivarDatos()
+                    self.reiniciarDatos()
+                })
+                dialogMessage.addAction(ok)
+                // Present dialog message to user
+                self.present(dialogMessage, animated: true, completion: nil)
             }
         }
         
@@ -275,6 +312,7 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             isPanaderiaCheck = true
             isPasteleriaCheck = false
             isCharcuteriaCheck = false
+            activarBotonRegistar()
             
         }
     }
@@ -288,6 +326,7 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             isPasteleriaCheck = true
             isPanaderiaCheck = false
             isCharcuteriaCheck = false
+            activarBotonRegistar()
         }
     }
     
@@ -300,6 +339,7 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             isCharcuteriaCheck = true
             isPanaderiaCheck = false
             isPasteleriaCheck = false
+            activarBotonRegistar()
         }
     }
     
@@ -336,6 +376,43 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 destination.tipoSegue = "crearContribuyente"
             }
         }
+    }
+    
+    func activarBotonRegistar(){
+        self.irAColaVirtualBtn.isEnabled = true
+        self.irAColaVirtualBtn.isUserInteractionEnabled = true
+        self.irAColaVirtualBtn.alpha = 1
+    
+    }
+    
+    func desactivarDatos(){
+        // Desactivamos los inputs
+        self.nombreTxt.isEnabled = false
+        self.contribuyenteTxt.isEnabled = false
+        self.cedulaContribuyenteTxt.isEnabled = false
+        self.cedulaContribuyenteTxt.isEnabled = false
+        self.contribuyentePicker.alpha = 0.5
+        self.contribuyentePicker.isUserInteractionEnabled = false
+        self.irAColaVirtualBtn.isEnabled = false
+        self.irAColaVirtualBtn.isUserInteractionEnabled = false
+        self.irAColaVirtualBtn.alpha = 0.5
+    }
+    
+    func reiniciarDatos(){
+        self.cedulaTxt.text = ""
+        self.nombreTxt.text = ""
+        self.cedulaContribuyenteTxt.text = ""
+        self.clickContribuyenteCheck(self)
+        self.contribuyenteTxt.text = ""
+        self.isReady = false
+        charcuteriaCheck.backgroundColor = UIColor.lightGray
+        pasteleriaCheck.backgroundColor = UIColor.lightGray
+        panaderiaCheck.backgroundColor = UIColor.lightGray
+        isCharcuteriaCheck = false
+        isPanaderiaCheck = false
+        isPasteleriaCheck = false
+        
+        
     }
     
 }

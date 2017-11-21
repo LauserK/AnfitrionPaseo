@@ -61,4 +61,23 @@ class ToolsPaseo {
         alert.view.addSubview(loadingIndicator)
         vc.present(alert, animated: true, completion: nil)
     }
+    
+    
+    func crearCuenta(ci_rif: String){
+        // Crear cuenta y actualizar contadores
+        ToolsPaseo().consultarDB(id: "open", sql: "SELECT a_pos_cuentas FROM sistema_contadores limit 1"){ data in
+            let auto = Int(ToolsPaseo().obtenerDato(s: data, i: 0))!
+            let auto_nuevo = auto + 1
+            let auto_cuentas = String(format: "%010d", auto_nuevo)
+            
+            // Si no existe la cuenta se crea
+            ToolsPaseo().consultarDB(id: "open", sql: "INSERT INTO `00000001`.`pos_cuentas` (`auto`, `cuenta`, `estatus_cuenta`, `estatus_servicio`, `estatus_abierta`, `estatus`, `acumulado`, `auto_cliente`, `ci_rif`, `nombre`, `dir_fiscal`, `hora`, `fin`, `corte`) VALUES ('\(auto_cuentas)', '\(ci_rif)', '0', '0', '0', 'Activo', '0.00', '', '', '', '', '', '', '0')") { (data) in
+                
+                // Verificamos si no existe algun error
+                if data.range(of:"Error") == nil {
+                    ToolsPaseo().consultarDB(id: "open", sql: "UPDATE `00000001`.`sistema_contadores` SET `a_pos_cuentas` = '\(auto_nuevo)' WHERE a_pos_cuentas != '' LIMIT 1"){(data) in}
+                }
+            }
+        }
+    }
 }

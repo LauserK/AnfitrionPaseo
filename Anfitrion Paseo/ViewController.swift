@@ -236,10 +236,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 if (self.tipoSegue == "crearCliente"){
                     // Busca la cuenta
                     ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto FROM pos_cuentas WHERE cuenta='\(self.cliente["ci_rif"])'") { (data) in
-                        self.auto_cuenta = ToolsPaseo().obtenerDato(s: data, i: 0)
+                        let auto_cuenta = ToolsPaseo().obtenerDato(s: data, i: 0)
                         
-                        if (self.auto_cuenta == "") {
-                            print("no existe cuenta")
+                        // Si por alguna razon no se creo la cuenta, se crea al momento de traer la info
+                        if (auto_cuenta == "" && self.cliente["ci_rif"] != "") {
+                            ToolsPaseo().crearCuenta(ci_rif: self.cliente["ci_rif"]!)
                         }
                     }
                 }
@@ -251,8 +252,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                         self.performSegue(withIdentifier: "principal", sender: self)
                     }
                 }
-                
-                
             }
         }
     }
@@ -263,7 +262,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 destination.cliente = self.cliente
                 destination.contribuyente = self.contribuyente
                 destination.isReady = true
-                
                 
                 if (self.contribuyente["razon_social"] != ""){
                     destination.contribuyenteCheck.backgroundColor = UIColor.green
