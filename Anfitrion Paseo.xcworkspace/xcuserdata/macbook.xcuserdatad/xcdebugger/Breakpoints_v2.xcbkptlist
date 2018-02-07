@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Anfitrion Paseo/HomeController.swift"
-            timestampString = "539730729.207744"
+            timestampString = "539731936.7238851"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "395"
@@ -161,6 +161,54 @@
             endingLineNumber = "257"
             landmarkName = "enviarAColaVirtual(_:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Anfitrion Paseo/HomeController.swift"
+            timestampString = "539731936.7238851"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "275"
+            endingLineNumber = "275"
+            landmarkName = "enviarAColaVirtual(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Anfitrion_Paseo.HomeController.enviarAColaVirtual (Any) -&gt; ()"
+                  moduleName = "Anfitrion Paseo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/proyectos/Anfitrion%20Paseo/Anfitrion%20Paseo/HomeController.swift"
+                  timestampString = "539731940.279634"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "275"
+                  endingLineNumber = "275"
+                  offsetFromSymbolStart = "2348">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Anfitrion_Paseo.HomeController.(enviarAColaVirtual (Any) -&gt; ()).(closure #2)"
+                  moduleName = "Anfitrion Paseo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/proyectos/Anfitrion%20Paseo/Anfitrion%20Paseo/HomeController.swift"
+                  timestampString = "539731940.2830909"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "277"
+                  endingLineNumber = "277"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

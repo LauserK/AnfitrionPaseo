@@ -229,6 +229,7 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         ToolsPaseo().loadingView(vc: self, msg: "Cargando...")
         
         // Seccion a la cual se va a agregar a la cola virtual
+        // Panaderia == 04 Pasteleria == 06 Charcuteria == 03
         var seccion = ""
         if (isPanaderiaCheck == true){
             seccion = "04"
@@ -269,10 +270,10 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
         
-        
+        print(self.cliente)
+        print(self.contribuyente)
         // Realizamos el insert a la DB
-        ToolsPaseo().consultarDB(id: "open", sql: "INSERT INTO `00000001`.`pos_turno` (`id`, `seccion`, `cirif`, `nombre`, `estatus`, razon_social, rif) VALUES (NULL, '\(seccion)', '\(self.cliente["ci_rif"]!)', '\(self.cliente["razon_social"]!)', '0', '\(self.contribuyente["razon_social"])', '\(self.contribuyente["ci_rif"])');") { (data) in
-            
+        ToolsPaseo().consultarDB(id: "open", sql: "INSERT INTO `00000001`.`pos_turno` (`id`, `seccion`, `ci`, `nombre`, `estatus`, `razon_social`, `rif`) VALUES (NULL, '\(seccion)', '\(self.cliente["ci_rif"]!)', '\(self.cliente["razon_social"]!)', '0', '\(self.contribuyente["razon_social"]!)', '\(self.contribuyente["ci_rif"]!)');") { (data) in
             // Quitamos el loading y como callback lo que debe hacer
             self.dismiss(animated:false){
                 // Declare Alert message
