@@ -59,9 +59,34 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         "created":""
     ]
     
+    // Set border to inputs
+    func setBorders(){
+        
+        // Cedula
+        self.cedulaTxt.layer.borderColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0).cgColor
+        self.cedulaTxt.layer.borderWidth = 1
+        self.cedulaTxt.layer.cornerRadius = 5
+        // Nombre
+        self.nombreTxt.layer.borderColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0).cgColor
+        self.nombreTxt.layer.borderWidth = 1
+        self.nombreTxt.layer.cornerRadius = 5
+        // Dcoumento Contribuyente
+        self.cedulaContribuyenteTxt.layer.borderColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0).cgColor
+        self.cedulaContribuyenteTxt.layer.borderWidth = 1
+        self.cedulaContribuyenteTxt.layer.cornerRadius = 5
+        // Nombre del contribuyente
+        self.contribuyenteTxt.layer.borderColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0).cgColor
+        self.contribuyenteTxt.layer.borderWidth = 1
+        self.contribuyenteTxt.layer.cornerRadius = 5
+        
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Execute the method for borders
+        self.setBorders()
+        
         if (self.cliente["created"] == "1") {
             self.nombreTxt.text = self.cliente["razon_social"]
             self.cedulaTxt.text = self.cliente["ci_rif"]!.replacingOccurrences(of: "V", with: "", options: NSString.CompareOptions.literal, range:nil)
@@ -246,7 +271,7 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         
         // Realizamos el insert a la DB
-        ToolsPaseo().consultarDB(id: "open", sql: "INSERT INTO `00000001`.`pos_turno` (`id`, `seccion`, `cirif`, `nombre`, `estatus`) VALUES (NULL, '\(seccion)', '\(self.cliente["ci_rif"]!)', '\(self.cliente["razon_social"]!)', '0');") { (data) in
+        ToolsPaseo().consultarDB(id: "open", sql: "INSERT INTO `00000001`.`pos_turno` (`id`, `seccion`, `cirif`, `nombre`, `estatus`, razon_social, rif) VALUES (NULL, '\(seccion)', '\(self.cliente["ci_rif"]!)', '\(self.cliente["razon_social"]!)', '0', '\(self.contribuyente["razon_social"])', '\(self.contribuyente["ci_rif"])');") { (data) in
             
             // Quitamos el loading y como callback lo que debe hacer
             self.dismiss(animated:false){
@@ -307,8 +332,8 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBAction func clickPanaderiaCheck(_ sender: Any) {
         if (isPanaderiaCheck == false && isReady == true) {
             panaderiaCheck.backgroundColor = UIColor.green
-            pasteleriaCheck.backgroundColor = UIColor.lightGray
-            charcuteriaCheck.backgroundColor = UIColor.lightGray
+            pasteleriaCheck.backgroundColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0)
+            charcuteriaCheck.backgroundColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0)
             isPanaderiaCheck = true
             isPasteleriaCheck = false
             isCharcuteriaCheck = false
@@ -321,8 +346,8 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBAction func clickPasteleriaCheck(_ sender: Any) {
         if (isPasteleriaCheck == false && isReady == true) {
             pasteleriaCheck.backgroundColor = UIColor.green
-            panaderiaCheck.backgroundColor = UIColor.lightGray
-            charcuteriaCheck.backgroundColor = UIColor.lightGray
+            panaderiaCheck.backgroundColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0)
+            charcuteriaCheck.backgroundColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0)
             isPasteleriaCheck = true
             isPanaderiaCheck = false
             isCharcuteriaCheck = false
@@ -334,8 +359,8 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBAction func clickCharcuteriaCheck(_ sender: Any) {
         if (isCharcuteriaCheck == false && isReady == true) {
             charcuteriaCheck.backgroundColor = UIColor.green
-            pasteleriaCheck.backgroundColor = UIColor.lightGray
-            panaderiaCheck.backgroundColor = UIColor.lightGray
+            pasteleriaCheck.backgroundColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0)
+            panaderiaCheck.backgroundColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0)
             isCharcuteriaCheck = true
             isPanaderiaCheck = false
             isPasteleriaCheck = false
@@ -352,7 +377,7 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             self.contribuyentePicker.isUserInteractionEnabled = true
             self.isReady = false
         } else {
-            contribuyenteCheck.backgroundColor = UIColor.lightGray
+            contribuyenteCheck.backgroundColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0)
             isContribuyenteCheck = false
             self.cedulaContribuyenteTxt.isEnabled = false
             self.contribuyentePicker.alpha = 0.5
@@ -405,9 +430,9 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.clickContribuyenteCheck(self)
         self.contribuyenteTxt.text = ""
         self.isReady = false
-        charcuteriaCheck.backgroundColor = UIColor.lightGray
-        pasteleriaCheck.backgroundColor = UIColor.lightGray
-        panaderiaCheck.backgroundColor = UIColor.lightGray
+        charcuteriaCheck.backgroundColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0)
+        pasteleriaCheck.backgroundColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0)
+        panaderiaCheck.backgroundColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0)
         isCharcuteriaCheck = false
         isPanaderiaCheck = false
         isPasteleriaCheck = false
