@@ -62,22 +62,24 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     // Set border to inputs
     func setBorders(){
         
+        let borderWidth = CGFloat(2)
+        let cornerRadius = CGFloat(5)
         // Cedula
         self.cedulaTxt.layer.borderColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0).cgColor
-        self.cedulaTxt.layer.borderWidth = 1
-        self.cedulaTxt.layer.cornerRadius = 5
+        self.cedulaTxt.layer.borderWidth = borderWidth
+        self.cedulaTxt.layer.cornerRadius = cornerRadius
         // Nombre
         self.nombreTxt.layer.borderColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0).cgColor
-        self.nombreTxt.layer.borderWidth = 1
-        self.nombreTxt.layer.cornerRadius = 5
+        self.nombreTxt.layer.borderWidth = borderWidth
+        self.nombreTxt.layer.cornerRadius = cornerRadius
         // Dcoumento Contribuyente
         self.cedulaContribuyenteTxt.layer.borderColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0).cgColor
-        self.cedulaContribuyenteTxt.layer.borderWidth = 1
-        self.cedulaContribuyenteTxt.layer.cornerRadius = 5
+        self.cedulaContribuyenteTxt.layer.borderWidth = borderWidth
+        self.cedulaContribuyenteTxt.layer.cornerRadius = cornerRadius
         // Nombre del contribuyente
         self.contribuyenteTxt.layer.borderColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0).cgColor
-        self.contribuyenteTxt.layer.borderWidth = 1
-        self.contribuyenteTxt.layer.cornerRadius = 5
+        self.contribuyenteTxt.layer.borderWidth = borderWidth
+        self.contribuyenteTxt.layer.cornerRadius = cornerRadius
         
         
     }
@@ -161,8 +163,9 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     self.irAColaVirtualBtn.alpha = 1
                     
                     
+                    let account = self.cliente["ci_rif"]!.substring(from:self.cliente["ci_rif"]!.index(self.cliente["ci_rif"]!.endIndex, offsetBy: -5))
                     // Busca la cuenta si no existe la crea
-                    ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto FROM pos_cuentas WHERE cuenta='\(self.cliente["ci_rif"])'") { (data) in
+                    ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto FROM pos_cuentas WHERE cuenta='\(account)'") { (data) in
                         let auto_cuenta = ToolsPaseo().obtenerDato(s: data, i: 0)
                         
                         // Si por alguna razon no se creo la cuenta, se crea al momento de traer la info
@@ -270,8 +273,6 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
         
-        print(self.cliente)
-        print(self.contribuyente)
         // Realizamos el insert a la DB
         ToolsPaseo().consultarDB(id: "open", sql: "INSERT INTO `00000001`.`pos_turno` (`id`, `seccion`, `ci`, `nombre`, `estatus`, `razon_social`, `rif`) VALUES (NULL, '\(seccion)', '\(self.cliente["ci_rif"]!)', '\(self.cliente["razon_social"]!)', '0', '\(self.contribuyente["razon_social"]!)', '\(self.contribuyente["ci_rif"]!)');") { (data) in
             // Quitamos el loading y como callback lo que debe hacer
@@ -442,4 +443,3 @@ class HomeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
 }
-

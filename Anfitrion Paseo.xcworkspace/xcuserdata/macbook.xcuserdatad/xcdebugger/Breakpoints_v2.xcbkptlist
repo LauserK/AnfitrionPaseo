@@ -25,28 +25,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Anfitrion Paseo/tools.swift"
-            timestampString = "530728019.972434"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "14"
-            endingLineNumber = "14"
-            landmarkName = "obtenerDato(s:i:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Anfitrion Paseo/HomeController.swift"
-            timestampString = "539731936.7238851"
+            timestampString = "549651692.5663249"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "395"
-            endingLineNumber = "395"
+            startingLineNumber = "397"
+            endingLineNumber = "397"
             landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
             <Locations>
@@ -90,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Anfitrion Paseo/HomeController.swift"
-            timestampString = "539730729.207744"
+            timestampString = "549651371.420253"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "240"
-            endingLineNumber = "240"
+            startingLineNumber = "244"
+            endingLineNumber = "244"
             landmarkName = "enviarAColaVirtual(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -106,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Anfitrion Paseo/HomeController.swift"
-            timestampString = "539730729.207744"
+            timestampString = "549651371.420253"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "249"
-            endingLineNumber = "249"
+            startingLineNumber = "253"
+            endingLineNumber = "253"
             landmarkName = "enviarAColaVirtual(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -122,23 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Anfitrion Paseo/HomeController.swift"
-            timestampString = "539730729.207744"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "256"
-            endingLineNumber = "256"
-            landmarkName = "enviarAColaVirtual(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Anfitrion Paseo/HomeController.swift"
-            timestampString = "539730729.207744"
+            timestampString = "549651371.420253"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "260"
@@ -154,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Anfitrion Paseo/HomeController.swift"
-            timestampString = "539730729.207744"
+            timestampString = "549651371.420253"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
             landmarkName = "enviarAColaVirtual(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -166,49 +134,145 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Anfitrion Paseo/HomeController.swift"
-            timestampString = "539731936.7238851"
+            timestampString = "549651371.420253"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "275"
-            endingLineNumber = "275"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
             landmarkName = "enviarAColaVirtual(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Anfitrion Paseo/tools.swift"
+            timestampString = "549651562.656119"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "crearCuenta(ci_rif:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Anfitrion Paseo/tools.swift"
+            timestampString = "549651565.768073"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "crearCuenta(ci_rif:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Anfitrion_Paseo.HomeController.enviarAColaVirtual (Any) -&gt; ()"
+                  symbolName = "Anfitrion_Paseo.ToolsPaseo.(crearCuenta (ci_rif : Swift.String) -&gt; ()).(closure #1)"
                   moduleName = "Anfitrion Paseo"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/proyectos/Anfitrion%20Paseo/Anfitrion%20Paseo/HomeController.swift"
-                  timestampString = "539731940.279634"
+                  urlString = "file:///Users/macbook/proyectos/Anfitrion%20Paseo/Anfitrion%20Paseo/tools.swift"
+                  timestampString = "549651694.400255"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "275"
-                  endingLineNumber = "275"
-                  offsetFromSymbolStart = "2348">
+                  startingLineNumber = "75"
+                  endingLineNumber = "75"
+                  offsetFromSymbolStart = "608">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Anfitrion_Paseo.HomeController.(enviarAColaVirtual (Any) -&gt; ()).(closure #2)"
+                  symbolName = "Anfitrion_Paseo.ToolsPaseo.(crearCuenta (ci_rif : Swift.String) -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "Anfitrion Paseo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/proyectos/Anfitrion%20Paseo/Anfitrion%20Paseo/tools.swift"
+                  timestampString = "549651694.403473"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Anfitrion Paseo/HomeController.swift"
+            timestampString = "549651623.541811"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "validarCedula(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Anfitrion_Paseo.HomeController.(validarCedula (Any) -&gt; ()).(closure #1).(closure #1)"
                   moduleName = "Anfitrion Paseo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/macbook/proyectos/Anfitrion%20Paseo/Anfitrion%20Paseo/HomeController.swift"
-                  timestampString = "539731940.2830909"
+                  timestampString = "549651694.409883"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "277"
-                  endingLineNumber = "277"
+                  startingLineNumber = "168"
+                  endingLineNumber = "168"
+                  offsetFromSymbolStart = "4736">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Anfitrion_Paseo.HomeController.(validarCedula (Any) -&gt; ()).(closure #1).(closure #1).(closure #2)"
+                  moduleName = "Anfitrion Paseo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/proyectos/Anfitrion%20Paseo/Anfitrion%20Paseo/HomeController.swift"
+                  timestampString = "549651694.41308"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "169"
+                  endingLineNumber = "169"
                   offsetFromSymbolStart = "28">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Anfitrion Paseo/HomeController.swift"
+            timestampString = "549651663.598794"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "validarCedula(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

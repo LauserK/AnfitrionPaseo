@@ -51,11 +51,39 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var cedula:String = ""
     var tipoSegue: String = ""
     
+    // Set border to inputs
+    func setBorders(){
+        
+        let borderWidth = CGFloat(2)
+        let cornerRadius = CGFloat(5)
+        // Cedula
+        self.cedulaTxt.layer.borderColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0).cgColor
+        self.cedulaTxt.layer.borderWidth = borderWidth
+        self.cedulaTxt.layer.cornerRadius = cornerRadius
+        // Nombre
+        self.nombreTxt.layer.borderColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0).cgColor
+        self.nombreTxt.layer.borderWidth = borderWidth
+        self.nombreTxt.layer.cornerRadius = cornerRadius
+        // Nombre Contribuyente
+        self.nombreLabel.layer.borderColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0).cgColor
+        self.nombreLabel.layer.borderWidth = borderWidth
+        self.nombreLabel.layer.cornerRadius = cornerRadius
+        // Municipio del contribuyente
+        self.municipioTxt.layer.borderColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0).cgColor
+        self.municipioTxt.layer.borderWidth = borderWidth
+        self.municipioTxt.layer.cornerRadius = cornerRadius
+        // Municipio del contribuyente
+        self.numeroTxt.layer.borderColor = UIColor(red: 161/255, green: 132/255, blue: 24/255, alpha: 1.0).cgColor
+        self.numeroTxt.layer.borderWidth = borderWidth
+        self.numeroTxt.layer.cornerRadius = cornerRadius
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.limpiar()
-        
+        self.setBorders()
         self.cedulaTxt.text = cedula
         
         // Seteamos el formato Day-Month-Year al Picker
@@ -234,8 +262,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 
                 
                 if (self.tipoSegue == "crearCliente"){
+                    let account = self.cliente["ci_rif"]!.substring(from:self.cliente["ci_rif"]!.index(self.cliente["ci_rif"]!.endIndex, offsetBy: -5))
                     // Busca la cuenta
-                    ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto FROM pos_cuentas WHERE cuenta='\(self.cliente["ci_rif"])'") { (data) in
+                    ToolsPaseo().consultarDB(id: "open", sql: "SELECT auto FROM pos_cuentas WHERE cuenta='\(account)'") { (data) in
                         let auto_cuenta = ToolsPaseo().obtenerDato(s: data, i: 0)
                         
                         // Si por alguna razon no se creo la cuenta, se crea al momento de traer la info

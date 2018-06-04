@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		68B8664F2A78F34CCB4C7CA3 /* Pods_Anfitrion_Paseo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826FD18A65831C13049F08EE /* Pods_Anfitrion_Paseo.framework */; };
 		FA2E2A181FA759DC00B01428 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2E2A171FA759DC00B01428 /* HomeController.swift */; };
-		FACA1DA11FAB5A29004159D6 /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACA1DA01FAB5A29004159D6 /* LoadingOverlay.swift */; };
 		FAD6E4611F98D9B500824842 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD6E4601F98D9B500824842 /* AppDelegate.swift */; };
 		FAD6E4631F98D9B500824842 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD6E4621F98D9B500824842 /* ViewController.swift */; };
 		FAD6E4661F98D9B500824842 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAD6E4641F98D9B500824842 /* Main.storyboard */; };
@@ -23,7 +22,6 @@
 		7015108C23DA3EDFE7DC1DC0 /* Pods-Anfitrion Paseo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Anfitrion Paseo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Anfitrion Paseo/Pods-Anfitrion Paseo.debug.xcconfig"; sourceTree = "<group>"; };
 		826FD18A65831C13049F08EE /* Pods_Anfitrion_Paseo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Anfitrion_Paseo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA2E2A171FA759DC00B01428 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
-		FACA1DA01FAB5A29004159D6 /* LoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
 		FAD6E45D1F98D9B500824842 /* Anfitrion Paseo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Anfitrion Paseo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD6E4601F98D9B500824842 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAD6E4621F98D9B500824842 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -92,7 +90,6 @@
 				FAD6E46C1F98D9B500824842 /* Info.plist */,
 				FADA23D61FA21B2200450F11 /* tools.swift */,
 				FA2E2A171FA759DC00B01428 /* HomeController.swift */,
-				FACA1DA01FAB5A29004159D6 /* LoadingOverlay.swift */,
 			);
 			path = "Anfitrion Paseo";
 			sourceTree = "<group>";
@@ -230,7 +227,6 @@
 				FA2E2A181FA759DC00B01428 /* HomeController.swift in Sources */,
 				FADA23D71FA21B2200450F11 /* tools.swift in Sources */,
 				FAD6E4631F98D9B500824842 /* ViewController.swift in Sources */,
-				FACA1DA11FAB5A29004159D6 /* LoadingOverlay.swift in Sources */,
 				FAD6E4611F98D9B500824842 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -69,9 +69,10 @@ class ToolsPaseo {
             let auto = Int(ToolsPaseo().obtenerDato(s: data, i: 0))!
             let auto_nuevo = auto + 1
             let auto_cuentas = String(format: "%010d", auto_nuevo)
+            let account = ci_rif.substring(from:ci_rif.index(ci_rif.endIndex, offsetBy: -5))
             
             // Si no existe la cuenta se crea
-            ToolsPaseo().consultarDB(id: "open", sql: "INSERT INTO `00000001`.`pos_cuentas` (`auto`, `cuenta`, `estatus_cuenta`, `estatus_servicio`, `estatus_abierta`, `estatus`, `acumulado`, `auto_cliente`, `ci_rif`, `nombre`, `dir_fiscal`, `hora`, `fin`, `corte`) VALUES ('\(auto_cuentas)', '\(ci_rif)', '0', '0', '0', 'Activo', '0.00', '', '', '', '', '', '', '0')") { (data) in
+            ToolsPaseo().consultarDB(id: "open", sql: "INSERT INTO `00000001`.`pos_cuentas` (`auto`, `cuenta`, `estatus_cuenta`, `estatus_servicio`, `estatus_abierta`, `estatus`, `acumulado`, `auto_cliente`, `ci_rif`, `nombre`, `dir_fiscal`, `hora`, `fin`, `corte`) VALUES ('\(auto_cuentas)', '\(account)', '0', '0', '0', 'Activo', '0.00', '', '', '', '', '', '', '0')") { (data) in
                 
                 // Verificamos si no existe algun error
                 if data.range(of:"Error") == nil {
